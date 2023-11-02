@@ -18,7 +18,7 @@ const submitForm = async (
         body: JSON.stringify({
             username: username.value,
             password: password.value,
-            email: password.value,
+            email: email.value,
         }),
     });
     const response = await createUser.json();

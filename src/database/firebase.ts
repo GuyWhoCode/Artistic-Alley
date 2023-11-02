@@ -14,12 +14,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export const initializeFirebase = (): void => {
+const initializeFirebase = (): any => {
     if (firebase.apps.length > 0) {
+        console.log(firebase.apps)
         return;
     }
     // Guard clause against multiple initializations
 
-    initializeApp(firebaseConfig);
     console.log("Firebase database connection has been initialized")
+    return initializeApp(firebaseConfig);
 };
+
+export const firebaseApp = initializeFirebase();
