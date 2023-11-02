@@ -3,10 +3,10 @@ import Link from "next/link";
 // `app/profile/page.tsx` is the UI for the `/profile` URL
 export default function Page() {
     return (
-        <div>
+        <main>
             <h1>Hello, Profile Page!</h1>
 
             <Link href="/">Return Home</Link>
-        </div>
+        </main>
     );
 }
