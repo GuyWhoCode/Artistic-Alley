@@ -5,6 +5,7 @@ import {
     getAuth,
     signInWithEmailAndPassword,
     onAuthStateChanged,
+    signOut,
 } from "firebase/auth";
 import { firebaseApp } from "@/database/firebase";
 import { useEffect, useState } from "react";
@@ -20,12 +21,15 @@ const signIn = async (): Promise<void> => {
         password.value
     );
     const currentUser: User = signInFlow.user;
-    // console.log(currentUser);
+};
+
+const signOutUser = async (): Promise<void> => {
+    await signOut(auth);
 };
 
 export default function Page() {
     const [signedIn, changeLoginStatus] = useState(false);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({} as User);
     onAuthStateChanged(auth, (user) => {
         if (user) {
             // User is signed in, see docs for a list of available properties
@@ -36,6 +40,8 @@ export default function Page() {
         } else {
             // User is signed out
             // ...
+            changeLoginStatus(false);
+            setUser({} as User);
         }
     });
     // useEffect(() => {
@@ -45,7 +51,11 @@ export default function Page() {
     return (
         <main>
             <h1>Sign In page!</h1>
-            <Login loginText="Sign In" submitForm={signIn} />
+            {signedIn ? (
+                <button onClick={signOutUser}>Sign Out</button>
+            ) : (
+                <Login loginText="Sign In" submitForm={signIn} />
+            )}
             <h1>{user?.email}</h1>
         </main>
     );
