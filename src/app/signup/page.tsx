@@ -1,35 +1,53 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { firebaseApp } from "@/database/firebase";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    UserCredential,
+} from "firebase/auth";
+import Login from "@/components/login";
 
-const submitForm = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    // const username = document.getElementById("username") as HTMLInputElement;
-    // const password = document.getElementById("password") as HTMLInputElement;
+const createNewUser = async (): Promise<void> => {
+    const username = document.getElementById("username") as HTMLInputElement;
+    const password = document.getElementById("password") as HTMLInputElement;
+    const email = document.getElementById("email") as HTMLInputElement;
 
-    const username = "Jason";
-    const password = "password";
-    const createUser = await fetch("/api/signup", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username: username, password: password }),
-    })
+    const auth = getAuth(firebaseApp);
+    try {
+        const createdUser: UserCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email.value,
+                password.value
+            );
 
-    
+        alert("User has been successfully created");
+    } catch (error) {
+        if (error instanceof Error) {
+            if (error.message.includes("auth/email-already-in-use")) {
+                alert("Error: Email already in use");
+                return;
+            }
+            alert(error.message);
+        }
+    }
 };
 
-export default function SignUp() {
+export default function Page() {
+    const router = useRouter();
+
+    const submitForm = () => {
+        createNewUser();
+        router.push("/");
+    };
+
     return (
         <main>
             <h1>Sign Up page!</h1>
-            <form>
-                <input type="text" placeholder="Username" id="username" />
-                <input type="password" placeholder="Password" id="password" />
-                <button id="submit" onClick={submitForm}>
-                    Submit Form
-                </button>
-            </form>
+            <input type="email" placeholder="Username" id="username" required />
+            <Login loginText="Sign Up" submitForm={submitForm} />
             <Link href="/">Return Home</Link>
         </main>
     );
