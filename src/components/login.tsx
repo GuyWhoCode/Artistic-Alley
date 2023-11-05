@@ -6,7 +6,7 @@ interface LoginProps {
 export default function Login({ loginText, submitForm }: LoginProps) {
     return (
         <>
-            <input type="text" placeholder="Username" id="username" required />
+            <input type="text" placeholder="Email" id="email" required />
             <input
                 type="password"
                 placeholder="Password"

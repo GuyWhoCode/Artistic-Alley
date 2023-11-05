@@ -14,7 +14,6 @@ const createNewUser = async (): Promise<void> => {
     const password = document.getElementById("password") as HTMLInputElement;
     const email = document.getElementById("email") as HTMLInputElement;
 
-    // const db = getDatabase(firebaseApp);
     const auth = getAuth(firebaseApp);
     try {
         const createdUser: UserCredential =
@@ -34,11 +33,6 @@ const createNewUser = async (): Promise<void> => {
             alert(error.message);
         }
     }
-
-    // set(ref(db, "users/" + username), {
-    //     username: username,
-    //     password: password,
-    // });
 };
 
 export default function Page() {
@@ -52,7 +46,7 @@ export default function Page() {
     return (
         <main>
             <h1>Sign Up page!</h1>
-            <input type="email" placeholder="Email" id="email" required />
+            <input type="email" placeholder="Username" id="username" required />
             <Login loginText="Sign Up" submitForm={submitForm} />
             <Link href="/">Return Home</Link>
         </main>
