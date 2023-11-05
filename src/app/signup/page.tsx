@@ -1,65 +1,59 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { firebaseApp } from "@/database/firebase";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    UserCredential,
+} from "firebase/auth";
+import Login from "@/components/login";
 
-const submitForm = async (
-    event: React.MouseEvent<HTMLButtonElement>
-): Promise<void> => {
-    event.preventDefault();
+const createNewUser = async (): Promise<void> => {
     const username = document.getElementById("username") as HTMLInputElement;
     const password = document.getElementById("password") as HTMLInputElement;
     const email = document.getElementById("email") as HTMLInputElement;
 
-    const createUser = await fetch("/api/signup", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            username: username.value,
-            password: password.value,
-            email: email.value,
-        }),
-    });
-    const response = await createUser.json();
-    if (response.message.includes("auth/email-already-in-use")) {
-        alert("Error: Email already in use");
-        return;
+    // const db = getDatabase(firebaseApp);
+    const auth = getAuth(firebaseApp);
+    try {
+        const createdUser: UserCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email.value,
+                password.value
+            );
+
+        alert("User has been successfully created");
+    } catch (error) {
+        if (error instanceof Error) {
+            if (error.message.includes("auth/email-already-in-use")) {
+                alert("Error: Email already in use");
+                return;
+            }
+            alert(error.message);
+        }
     }
 
-    alert("User has been successfully created");
+    // set(ref(db, "users/" + username), {
+    //     username: username,
+    //     password: password,
+    // });
 };
 
 export default function Page() {
     const router = useRouter();
 
+    const submitForm = () => {
+        createNewUser();
+        router.push("/");
+    };
+
     return (
         <main>
             <h1>Sign Up page!</h1>
-            <form>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    id="username"
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    id="password"
-                    required
-                />
-                <input type="email" placeholder="Email" id="email" required />
-                <button
-                    id="submit"
-                    onClick={(event) => {
-                        submitForm(event);
-                        router.push("/");
-                    }}
-                >
-                    Submit Form
-                </button>
-            </form>
+            <input type="email" placeholder="Email" id="email" required />
+            <Login loginText="Sign Up" submitForm={submitForm} />
             <Link href="/">Return Home</Link>
         </main>
     );
