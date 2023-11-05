@@ -54,7 +54,7 @@ export default function Page() {
             {signedIn ? (
                 <button onClick={signOutUser}>Sign Out</button>
             ) : (
-                <Login loginText="Sign In" submitForm={signIn} />
+                <Login submitForm={signIn} />
             )}
             <h1>{user?.email}</h1>
         </main>

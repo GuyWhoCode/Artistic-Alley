@@ -7,7 +7,7 @@ import {
     createUserWithEmailAndPassword,
     UserCredential,
 } from "firebase/auth";
-import Login from "@/components/login";
+import SignUp from "@/components/signup";
 
 const createNewUser = async (): Promise<void> => {
     const username = document.getElementById("username") as HTMLInputElement;
@@ -47,7 +47,7 @@ export default function Page() {
         <main>
             <h1>Sign Up page!</h1>
             <input type="email" placeholder="Username" id="username" required />
-            <Login loginText="Sign Up" submitForm={submitForm} />
+            <SignUp loginText="Sign Up" submitForm={submitForm} />
             <Link href="/">Return Home</Link>
         </main>
     );
