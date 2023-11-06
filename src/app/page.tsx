@@ -11,6 +11,8 @@ export default function Page() {
             <Link href="/signup">Sign up</Link>
             <br />
             <Link href="/signin">Sign In</Link>
+            <br />
+            <Link href="/messaging">Messaging</Link>
         </main>
     );
 }
