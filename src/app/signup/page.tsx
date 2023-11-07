@@ -46,8 +46,7 @@ export default function Page() {
     return (
         <main>
             <h1>Sign Up page!</h1>
-            <input type="email" placeholder="Username" id="username" required />
-            <SignUp loginText="Sign Up" submitForm={submitForm} />
+            <SignUp submitForm={submitForm} />
             <Link href="/">Return Home</Link>
         </main>
     );
