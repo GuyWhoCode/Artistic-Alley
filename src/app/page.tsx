@@ -6,11 +6,15 @@ export default function Page() {
         <main>
             <h1>Welcome to the home page!</h1>
 
-            <Link href="/profile"> Profile </Link>
+            <Link href="/profile">Profile</Link>
             <br />
-            <Link href="/signup">Sign up</Link>
+            <Link href="/signup">Sign Up</Link>
             <br />
             <Link href="/signin">Sign In</Link>
+            <br />
+            <Link href="/messaging">Messaging</Link>
+            <br />
+            <Link href="/chatting">Chatting</Link>
         </main>
     );
 }
