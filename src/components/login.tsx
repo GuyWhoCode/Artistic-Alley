@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,9 +9,23 @@ interface LoginProps {
 }
 
 export default function Login({ submitForm }: LoginProps) {
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(formData);
         submitForm();
+    };
+
+    const handleChange = (e: React.ChangeEvent) => {
+        const { name, value } = e.target as HTMLInputElement;
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value,
+        }));
     };
     return (
         <div className="flex items-center justify-center h-screen ">
@@ -23,11 +37,25 @@ export default function Login({ submitForm }: LoginProps) {
                     <div className="grid gap-3">
                         <div>
                             <Label htmlFor="email">Email</Label>
-                            <Input type="email" id="email" />
+                            <Input
+                                name="email"
+                                type="email"
+                                id="email"
+                                value={formData.email}
+                                required
+                                onChange={handleChange}
+                            />
                         </div>
                         <div>
                             <Label htmlFor="password">Password</Label>
-                            <Input type="password" id="password" />
+                            <Input
+                                name="password"
+                                type="password"
+                                id="password"
+                                value={formData.password}
+                                required
+                                onChange={handleChange}
+                            />
                         </div>
                         <div className="flex justify-between items-center">
                             <div className="flex space-x-2 ">
@@ -63,20 +91,3 @@ export default function Login({ submitForm }: LoginProps) {
         </div>
     );
 }
-
-// export default function Login({ loginText, submitForm }: LoginProps) {
-//     return (
-//         <>
-//             <input type="text" placeholder="Email" id="email" required />
-//             <input
-//                 type="password"
-//                 placeholder="Password"
-//                 id="password"
-//                 required
-//             />
-//             <button id="submit" onClick={submitForm}>
-//                 {loginText}
-//             </button>
-//         </>
-//     );
-// }
