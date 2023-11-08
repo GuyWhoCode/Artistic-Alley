@@ -1,9 +1,10 @@
 import Link from "next/link";
+import "../globals.css";
 
 export default function Page() {
     return (
         <main>
-            <h1>This is THE messaging page right here</h1>
+            <h1 className="text-3xl font-bold underline">Hello world!</h1>
             {/* 
             TODO:
             We need to build just the front end of the messaging page
@@ -12,5 +13,5 @@ export default function Page() {
             */}
             <Link href="/">Return Home</Link>
         </main>
-    )
+    );
 }
