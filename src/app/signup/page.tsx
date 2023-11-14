@@ -9,36 +9,60 @@ import {
 } from "firebase/auth";
 import SignUp from "@/components/signup";
 import { UserFormData, User, Artist } from "@/database/types";
-import { getFirestore } from "firebase/firestore";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
-const createNewUser = async ({email, password, artist, bio}: UserFormData): Promise<void> => {
+const createNewUser = async ({
+    email,
+    password,
+    artist,
+    bio,
+}: UserFormData): Promise<boolean> => {
     const auth = getAuth(firebaseApp);
+    const db = getFirestore(firebaseApp);
     try {
-        const createdUser: UserCredential =
-            await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
+        const createdLoggedUser: UserCredential =
+            await createUserWithEmailAndPassword(auth, email, password);
+        let newUserInfo: User | Artist = {
+            id: createdLoggedUser.user.uid,
+            username: "",
+            profilePicture: "",
 
-        alert("User has been successfully created");
+        };    
+        // Defaults new user info to regular user
+
+        if (artist) {
+            newUserInfo = {
+                ...newUserInfo,
+                bio: bio,
+                reviews: 0,
+            };
+        }
+        // Adds additional attributes to upgrade user to artist
+        
+        await addDoc(collection(db, "users"), newUserInfo);
+        return true;
     } catch (error) {
         if (error instanceof Error) {
             if (error.message.includes("auth/email-already-in-use")) {
                 alert("Error: Email already in use");
-                return;
+                return false;
             }
             alert(error.message);
         }
     }
+    return false;
 };
 
 export default function Page() {
     const router = useRouter();
 
-    const submitForm = (formData: UserFormData) => {
-        createNewUser(formData);
-        router.push("/");
+    const submitForm = async (formData: UserFormData) => {
+        const result = await createNewUser(formData);
+        if (result) {
+            router.push("/");
+        } else {
+            alert("Error creating user");
+        }
     };
 
     return (
