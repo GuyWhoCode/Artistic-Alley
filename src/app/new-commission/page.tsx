@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { firebaseApp } from "@/database/firebase";
 import { getAuth } from "firebase/auth";
@@ -9,7 +10,6 @@ import { useRouter } from "next/navigation";
 export default function Page() {
     const db = getFirestore(firebaseApp);
     const auth = getAuth(firebaseApp);
-    const currentUser = auth.currentUser;
     const [commissionInfo, setCommissionInfo] = useState<Commission>({
         userId: "",
         title: "",
@@ -21,14 +21,12 @@ export default function Page() {
         keywords: [],
     });
     const router = useRouter();
-
-    if (!currentUser) {
-        router.push("/login");
-        return <></>;
-    }
-
-
     
+
+    // if (!currentUser) {
+    //     // router.push("/signin");
+    //     return <></>;
+    // }
 
     return (
         <main>

@@ -44,9 +44,9 @@ export default function Page() {
             setUser({} as User);
         }
     });
-    // useEffect(() => {
-    //     console.log(user)
-    // }, [signedIn, user]);
+    useEffect(() => {
+        console.log(auth.currentUser)
+    }, [signedIn, user]);
 
     return (
         <main>
