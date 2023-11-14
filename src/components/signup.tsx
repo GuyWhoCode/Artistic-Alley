@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { UserFormData } from "@/database/types";
-import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface LoginProps {
     submitForm: (formData: UserFormData) => void;
@@ -17,30 +17,22 @@ export default function SignUp({ submitForm }: LoginProps) {
         bio: "",
     });
 
-    useEffect(() => {
-        if (formData.artist === false) {
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                bio: "",
-            }));
-        }
-    }, [formData.artist]);
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         submitForm(formData);
     };
     const handleChange = (e: React.ChangeEvent) => {
-        const { name, value, type, checked } = e.target as HTMLInputElement;
+        const { name, value } = e.target as HTMLInputElement;
         setFormData((prevFormData) => ({
             ...prevFormData,
-            [name]: type === "checkbox" ? checked : value,
+            [name]: value,
         }));
     };
     const handleRadio = (value: string) => {
         setFormData((prevFormData) => ({
             ...prevFormData,
             artist: value === "artist" ? true : false,
+            bio: value === "artist" ? formData.bio : "",
         }));
     };
 
@@ -78,17 +70,11 @@ export default function SignUp({ submitForm }: LoginProps) {
                             <RadioGroup
                                 defaultValue="user"
                                 name="userRole"
+                                required
                                 onValueChange={handleRadio}
                             >
                                 <div className="flex space-x-10 justify-between">
                                     <div className="flex space-x-2 items-center">
-                                        {/* <Input
-                                        name="artist"
-                                        type="checkbox"
-                                        id="artist-check"
-                                        checked={formData.artist}
-                                        onChange={handleChange}
-                                    /> */}
                                         <RadioGroupItem
                                             value="artist"
                                             id="artist-check"
@@ -101,13 +87,6 @@ export default function SignUp({ submitForm }: LoginProps) {
                                         </Label>
                                     </div>
                                     <div className="flex space-x-2 items-center">
-                                        {/* <Input
-                                        name="user"
-                                        type="checkbox"
-                                        id="user-check"
-                                        checked={formData.user}
-                                        onChange={handleChange}
-                                    /> */}
                                         <RadioGroupItem
                                             value="default"
                                             id="user-check"
