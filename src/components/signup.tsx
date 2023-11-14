@@ -4,11 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { UserFormData } from "@/database/types";
-// import { Checkbox } from "@/components/ui/checkbox";
-
-// TODO:
-// Figure out shadcn Checkbox for artist or user
-// Consider using React Hook Form
+import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
 
 interface LoginProps {
     submitForm: (formData: UserFormData) => void;
@@ -18,7 +14,6 @@ export default function SignUp({ submitForm }: LoginProps) {
         email: "",
         password: "",
         artist: false,
-        user: false,
         bio: "",
     });
 
@@ -40,6 +35,12 @@ export default function SignUp({ submitForm }: LoginProps) {
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: type === "checkbox" ? checked : value,
+        }));
+    };
+    const handleRadio = (value: string) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            artist: value === "artist" ? true : false,
         }));
     };
 
@@ -74,38 +75,52 @@ export default function SignUp({ submitForm }: LoginProps) {
                             />
                         </div>
                         <div>
-                            <div className="flex space-x-10 justify-between">
-                                <div className="flex space-x-2 items-center">
-                                    <Input
+                            <RadioGroup
+                                defaultValue="user"
+                                name="userRole"
+                                onValueChange={handleRadio}
+                            >
+                                <div className="flex space-x-10 justify-between">
+                                    <div className="flex space-x-2 items-center">
+                                        {/* <Input
                                         name="artist"
                                         type="checkbox"
                                         id="artist-check"
                                         checked={formData.artist}
                                         onChange={handleChange}
-                                    />
-                                    <Label
-                                        htmlFor="artist-check"
-                                        className="text-sm text-muted-foreground"
-                                    >
-                                        Artist
-                                    </Label>
-                                </div>
-                                <div className="flex space-x-2 items-center">
-                                    <Input
+                                    /> */}
+                                        <RadioGroupItem
+                                            value="artist"
+                                            id="artist-check"
+                                        />
+                                        <Label
+                                            htmlFor="artist-check"
+                                            className="text-sm text-muted-foreground"
+                                        >
+                                            Artist
+                                        </Label>
+                                    </div>
+                                    <div className="flex space-x-2 items-center">
+                                        {/* <Input
                                         name="user"
                                         type="checkbox"
                                         id="user-check"
                                         checked={formData.user}
                                         onChange={handleChange}
-                                    />
-                                    <Label
-                                        htmlFor="user-check"
-                                        className="text-sm text-muted-foreground"
-                                    >
-                                        User
-                                    </Label>
+                                    /> */}
+                                        <RadioGroupItem
+                                            value="default"
+                                            id="user-check"
+                                        />
+                                        <Label
+                                            htmlFor="user-check"
+                                            className="text-sm text-muted-foreground"
+                                        >
+                                            User
+                                        </Label>
+                                    </div>
                                 </div>
-                            </div>
+                            </RadioGroup>
                             {formData.artist ? (
                                 <div>
                                     <Label htmlFor="bio">
@@ -120,9 +135,7 @@ export default function SignUp({ submitForm }: LoginProps) {
                                 </div>
                             ) : null}
                         </div>
-                        <Button type="submit">
-                            Sign Up
-                        </Button>
+                        <Button type="submit">Sign Up</Button>
                     </div>
                 </form>
             </div>

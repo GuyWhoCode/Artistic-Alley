@@ -8,7 +8,8 @@ import {
     UserCredential,
 } from "firebase/auth";
 import SignUp from "@/components/signup";
-import { UserFormData } from "@/database/types";
+import { UserFormData, User, Artist } from "@/database/types";
+import { getFirestore } from "firebase/firestore";
 
 const createNewUser = async ({email, password, artist, bio}: UserFormData): Promise<void> => {
     const auth = getAuth(firebaseApp);

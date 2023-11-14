@@ -65,6 +65,5 @@ export interface UserFormData {
     email: string,
     password: string,
     artist: boolean,
-    user: boolean,
     bio: string,
 }
