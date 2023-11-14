@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { UserFormData } from "@/database/types";
 // import { Checkbox } from "@/components/ui/checkbox";
 
 // TODO:
@@ -10,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 // Consider using React Hook Form
 
 interface LoginProps {
-    submitForm: () => void;
+    submitForm: (formData: UserFormData) => void;
 }
 export default function SignUp({ submitForm }: LoginProps) {
     const [formData, setFormData] = useState({
@@ -18,18 +19,21 @@ export default function SignUp({ submitForm }: LoginProps) {
         password: "",
         artist: false,
         user: false,
-        bio: null,
+        bio: "",
     });
 
     useEffect(() => {
-        if (formData.artist === true) {
+        if (formData.artist === false) {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                bio: "",
+            }));
         }
-    }, [formData]);
+    }, [formData.artist]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData);
-        // submitForm();
+        submitForm(formData);
     };
     const handleChange = (e: React.ChangeEvent) => {
         const { name, value, type, checked } = e.target as HTMLInputElement;

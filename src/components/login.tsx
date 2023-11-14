@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
 
 interface LoginProps {
     submitForm: () => void;
@@ -77,16 +78,16 @@ export default function Login({ submitForm }: LoginProps) {
                         <Button type="submit" className="mb-3">
                             Sign In
                         </Button>
-                        <div className="flex justify-between items-baseline">
-                            <p className="text-sm text-muted-foreground font-medium leading-none">
-                                {"Don't have an account?"}
-                            </p>
-                            <Button variant="link" className="font-semibold">
-                                Sign Up
-                            </Button>
-                        </div>
                     </div>
                 </form>
+                <div className="flex justify-between items-baseline">
+                    <p className="text-sm text-muted-foreground font-medium leading-none">
+                        {"Don't have an account?"}
+                    </p>
+                    <Button variant="link" className="font-semibold">
+                        <Link href="/signup">Sign Up</Link>
+                    </Button>
+                </div>
             </div>
         </div>
     );

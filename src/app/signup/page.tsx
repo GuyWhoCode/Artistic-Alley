@@ -8,19 +8,16 @@ import {
     UserCredential,
 } from "firebase/auth";
 import SignUp from "@/components/signup";
+import { UserFormData } from "@/database/types";
 
-const createNewUser = async (): Promise<void> => {
-    const username = document.getElementById("username") as HTMLInputElement;
-    const password = document.getElementById("password") as HTMLInputElement;
-    const email = document.getElementById("email") as HTMLInputElement;
-
+const createNewUser = async ({email, password, artist, bio}: UserFormData): Promise<void> => {
     const auth = getAuth(firebaseApp);
     try {
         const createdUser: UserCredential =
             await createUserWithEmailAndPassword(
                 auth,
-                email.value,
-                password.value
+                email,
+                password
             );
 
         alert("User has been successfully created");
@@ -38,8 +35,8 @@ const createNewUser = async (): Promise<void> => {
 export default function Page() {
     const router = useRouter();
 
-    const submitForm = () => {
-        createNewUser();
+    const submitForm = (formData: UserFormData) => {
+        createNewUser(formData);
         router.push("/");
     };
 
