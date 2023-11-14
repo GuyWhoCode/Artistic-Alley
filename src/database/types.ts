@@ -1,5 +1,4 @@
 export type Commission = {
-    id: string;
     userId: string;
     title: string;
     description: string;
