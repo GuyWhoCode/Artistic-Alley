@@ -7,47 +7,69 @@ import {
     createUserWithEmailAndPassword,
     UserCredential,
 } from "firebase/auth";
-import Login from "@/components/login";
+import SignUp, { UserFormData } from "@/components/signup";
+import { User, Artist } from "@/database/types";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
-const createNewUser = async (): Promise<void> => {
-    const username = document.getElementById("username") as HTMLInputElement;
-    const password = document.getElementById("password") as HTMLInputElement;
-    const email = document.getElementById("email") as HTMLInputElement;
 
+const createNewUser = async ({
+    email,
+    password,
+    artist,
+    bio,
+}: UserFormData): Promise<boolean> => {
     const auth = getAuth(firebaseApp);
+    const db = getFirestore(firebaseApp);
     try {
-        const createdUser: UserCredential =
-            await createUserWithEmailAndPassword(
-                auth,
-                email.value,
-                password.value
-            );
+        const createdLoggedUser: UserCredential =
+            await createUserWithEmailAndPassword(auth, email, password);
+        let newUserInfo: User | Artist = {
+            id: createdLoggedUser.user.uid,
+            username: "",
+            profilePicture: "",
 
-        alert("User has been successfully created");
+        };    
+        // Defaults new user info to regular user
+
+        if (artist) {
+            newUserInfo = {
+                ...newUserInfo,
+                bio: bio,
+                reviews: 0,
+            };
+        }
+        // Adds additional attributes to upgrade user to artist
+        
+        await addDoc(collection(db, "users"), newUserInfo);
+        return true;
     } catch (error) {
         if (error instanceof Error) {
             if (error.message.includes("auth/email-already-in-use")) {
                 alert("Error: Email already in use");
-                return;
+                return false;
             }
             alert(error.message);
         }
     }
+    return false;
 };
 
 export default function Page() {
     const router = useRouter();
 
-    const submitForm = () => {
-        createNewUser();
-        router.push("/");
+    const submitForm = async (formData: UserFormData) => {
+        const result = await createNewUser(formData);
+        if (result) {
+            router.push("/");
+        } else {
+            alert("Error creating user");
+        }
     };
 
     return (
         <main>
             <h1>Sign Up page!</h1>
-            <input type="email" placeholder="Username" id="username" required />
-            <Login loginText="Sign Up" submitForm={submitForm} />
+            <SignUp submitForm={submitForm} />
             <Link href="/">Return Home</Link>
         </main>
     );

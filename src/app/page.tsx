@@ -9,7 +9,7 @@ export default function Page() {
             <br />
             <Link href="/signup">Sign Up</Link>
             <br />
-            <Link href="/signin">Sign In</Link>
+            <Link href="/login">Login</Link>
             <br />
             <Link href="/messaging">Messaging</Link>
             <br />
