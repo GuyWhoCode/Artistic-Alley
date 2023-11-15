@@ -43,14 +43,17 @@ export default function Page() {
       body: formData,
     }).then((r) => r.json());
 
-    // prints out information about the image onto the screen
+    // prints out all the information data (json) about the image onto the screen
     // the link(url) printed out on the screen is how you can view the uploaded image
     setImageSrc(data.secure_url);
     setUploadData(data);
     setUploadSuccess(true); // Set upload success status to true
 
-    // prints out information about the data onto the console
+    // prints out all the information data (json) about the image onto the console
     // console.log('data', data)
+
+    // only prints out the secure url of the image onto the console
+    console.log('Secure URL:', data.secure_url);
   }
 
   return (
@@ -86,7 +89,11 @@ export default function Page() {
             <p>Image successfully uploaded!</p>
           )}
 
-          {uploadData && <code><pre>{JSON.stringify(uploadData, null, 2)}</pre></code>}
+          {/* This prints out all the json object data to the screen */}
+          {/* {uploadData && <code><pre>{JSON.stringify(uploadData, null, 2)}</pre></code>} */}
+
+          {/* This only prints out the secure url to the screen */}
+          {uploadData && (<p>Secure URL: {uploadData.secure_url}</p>)}
         </form>
       </main>
       <br>
