@@ -58,10 +58,3 @@ export interface Artist extends User {
     bio: string;
     reviews: number;
 }
-
-export interface UserFormData {
-    email: string,
-    password: string,
-    artist: boolean,
-    bio: string,
-}

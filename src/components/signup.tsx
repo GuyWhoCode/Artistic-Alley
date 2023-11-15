@@ -3,8 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { UserFormData } from "@/database/types";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
+export interface UserFormData {
+    email: string,
+    password: string,
+    artist: boolean,
+    bio: string,
+}
 
 interface LoginProps {
     submitForm: (formData: UserFormData) => void;

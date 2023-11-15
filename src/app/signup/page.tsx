@@ -7,9 +7,10 @@ import {
     createUserWithEmailAndPassword,
     UserCredential,
 } from "firebase/auth";
-import SignUp from "@/components/signup";
-import { UserFormData, User, Artist } from "@/database/types";
+import SignUp, { UserFormData } from "@/components/signup";
+import { User, Artist } from "@/database/types";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
+
 
 const createNewUser = async ({
     email,
