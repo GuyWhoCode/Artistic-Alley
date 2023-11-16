@@ -7,12 +7,7 @@ export type Commission = {
     reviews: number;
     categories: string[];
     keywords: string[];
-};
-
-export type CommissionImageBridge = {
-    id: string;
-    commissionId: string;
-    imageId: string;
+    image: string;
 };
 
 export type Message = {
