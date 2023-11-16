@@ -1,23 +1,12 @@
 "use client";
-import Login from "@/components/login";
-import {
-    getAuth,
-    signInWithEmailAndPassword,
-    signOut,
-} from "firebase/auth";
+import Login, { LoginFormData } from "@/components/login";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { firebaseApp } from "@/database/firebase";
 import useCurrentUser, { CurrentUser } from "@/hooks/useCurrentUser";
 const auth = getAuth(firebaseApp);
 
-const signIn = async (): Promise<void> => {
-    const email = document.getElementById("email") as HTMLInputElement;
-    const password = document.getElementById("password") as HTMLInputElement;
-
-    await signInWithEmailAndPassword(
-        auth,
-        email.value,
-        password.value
-    );
+const login = async ({ email, password }: LoginFormData): Promise<void> => {
+    await signInWithEmailAndPassword(auth, email, password);
 };
 
 const signOutUser = async (): Promise<void> => {
@@ -32,7 +21,7 @@ export default function Page() {
             {signedIn ? (
                 <button onClick={signOutUser}>Sign Out</button>
             ) : (
-                <Login submitForm={signIn} />
+                <Login submitForm={login} />
             )}
             <h1>{user?.email}</h1>
         </main>

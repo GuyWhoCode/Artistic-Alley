@@ -7,7 +7,7 @@ import {
     createUserWithEmailAndPassword,
     UserCredential,
 } from "firebase/auth";
-import SignUp, { UserFormData } from "@/components/signup";
+import SignUp, { NewUserFormData } from "@/components/signup";
 import { User, Artist } from "@/database/types";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 
@@ -17,7 +17,7 @@ const createNewUser = async ({
     password,
     artist,
     bio,
-}: UserFormData): Promise<boolean> => {
+}: NewUserFormData): Promise<boolean> => {
     const auth = getAuth(firebaseApp);
     const db = getFirestore(firebaseApp);
     try {
@@ -57,7 +57,7 @@ const createNewUser = async ({
 export default function Page() {
     const router = useRouter();
 
-    const submitForm = async (formData: UserFormData) => {
+    const submitForm = async (formData: NewUserFormData) => {
         const result = await createNewUser(formData);
         if (result) {
             router.push("/");
