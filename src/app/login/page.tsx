@@ -1,9 +1,8 @@
 "use client";
 import Login, { LoginFormData } from "@/components/login";
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { firebaseApp } from "@/database/firebase";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { auth } from "@/database/firebase";
 import useCurrentUser, { CurrentUser } from "@/hooks/useCurrentUser";
-const auth = getAuth(firebaseApp);
 
 const login = async ({ email, password }: LoginFormData): Promise<void> => {
     await signInWithEmailAndPassword(auth, email, password);

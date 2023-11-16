@@ -1,9 +1,4 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {}
 
-// module.exports = nextConfig
-module.exports = {
-    reactExperimental: {
-      serverComponents: false,
-    },
-  };
+module.exports = nextConfig

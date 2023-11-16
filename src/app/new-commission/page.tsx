@@ -1,15 +1,13 @@
 "use client";
 import Link from "next/link";
-import { firebaseApp } from "@/database/firebase";
-import { getAuth } from "firebase/auth";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { Commission } from "@/database/types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 export default function Page() {
-    const db = getFirestore(firebaseApp);
-    const auth = getAuth(firebaseApp);
+    const { signedIn, user } = useCurrentUser();
     const [commissionInfo, setCommissionInfo] = useState<Commission>({
         userId: "",
         title: "",
@@ -19,20 +17,23 @@ export default function Page() {
         reviews: 0,
         categories: [],
         keywords: [],
+        image: "",
     });
-    const router = useRouter();
-    
 
-    // if (!currentUser) {
-    //     // router.push("/signin");
+    const router = useRouter();
+
+    // if (!signedIn) {
+    //     router.push("/login");
     //     return <></>;
     // }
 
-    return (
+    return signedIn ? (
         <main>
-            <h1>Hello, Profile Page!</h1>
-
-            <Link href="/">Return Home</Link>
+            <h1>Create New Commission</h1>
+        </main>
+    ) : (
+        <main>
+            <Link href="/login">Login</Link>
         </main>
     );
 }

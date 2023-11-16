@@ -1,5 +1,5 @@
-import { firebaseApp } from "@/database/firebase";
-import { User, getAuth, onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/database/firebase";
+import { User, onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
 export interface CurrentUser {
     signedIn: boolean;
@@ -7,7 +7,6 @@ export interface CurrentUser {
 }
 
 export default function useCurrentUser(): CurrentUser {
-    const auth = getAuth(firebaseApp);
     const [signedIn, changeLoginStatus] = useState(false);
     const [user, setUser] = useState({} as User);
     onAuthStateChanged(auth, (user) => {
