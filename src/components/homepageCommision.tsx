@@ -21,7 +21,7 @@ export default function HomepageCommision({
                 <Image src={imgSrc} alt="test" width={size} height={size}/>
             </div>
             <div className="">
-                <Avatar className="absolute bottom-0 left-0 mb-7">
+                <Avatar className="absolute bottom-0 left-0 mb-7 w-[50px] h-[50px]">
                     <AvatarImage src={profilePicture} />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
