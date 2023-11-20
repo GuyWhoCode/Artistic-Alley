@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { url } from "inspector";
@@ -7,12 +8,14 @@ export default function HomepageCommision({
     price,
     title,
     profilePicture,
+    // onClick,
 }: {
     imgSrc: string;
     userName: string;
     price: string;
     title: string;
     profilePicture: string;
+    // onClick: () => void;
 }) {
     const size = 350;
     return (
@@ -25,7 +28,8 @@ export default function HomepageCommision({
                     <AvatarImage src={profilePicture} />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <h1 className="pb-4 text-base border-1 border-black pl-10 md:text-xl lg:text-xl">{title}</h1>
+                <h2 className="pl-14">{userName}</h2>
+                <h1 className="pb-4 pl-12 text-base border-1 border-black pl-10 md:text-xl lg:text-xl">{title}</h1>
             </div>
         </div>
     );

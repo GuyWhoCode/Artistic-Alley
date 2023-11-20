@@ -1,8 +1,10 @@
+"use client";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import HomepageCommision from "@/components/homepageCommision";
 
 export default function Page() {
+
     const pfpUrlPlaceholder = "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.6435-9/180978949_314228950059549_1005358403722529104_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=be3454&_nc_ohc=t-kEFO4r0oEAX8dCX0N&_nc_ht=scontent-sjc3-1.xx&oh=00_AfDDGu1dOSs-m8ToepSFqE3SCwGCN2ypyZgHjtUvibf2tQ&oe=6576618E";
     return (
         <main>
