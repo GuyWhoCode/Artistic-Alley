@@ -4,10 +4,12 @@ import { Input } from "@/components/ui/input";
 import HomepageCommision from "@/components/homepageCommision";
 import {
     NavigationMenu,
+    NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
+    navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 export default function Page() {
@@ -18,31 +20,46 @@ export default function Page() {
             <div className="flex flex-col items-center justify-center py-[60px] min-w-[320px]">
                 <NavigationMenu>
                     <NavigationMenuList>
-                        <NavigationMenuItem>
+                        <NavigationMenuItem className="px-1 br">
                             <Link href="/profile" legacyBehavior passHref>
                                 <NavigationMenuLink>Profile</NavigationMenuLink>
                             </Link>
                         </NavigationMenuItem>
-                        <NavigationMenuItem>
+                        <NavigationMenuItem className="px-1">
                             <Link href="/signup" legacyBehavior passHref>
                                 <NavigationMenuLink>Sign Up</NavigationMenuLink>
                             </Link>
                         </NavigationMenuItem>
-
-                        <Link href="/login" legacyBehavior passHref>
-                            <NavigationMenuLink>Login</NavigationMenuLink>
-                        </Link>
-                        <Link href="/messaging" legacyBehavior passHref>
-                            <NavigationMenuLink>Messaging</NavigationMenuLink>
-                        </Link>
-                        <Link href="/chatting" legacyBehavior passHref>
-                            <NavigationMenuLink>Chatting</NavigationMenuLink>
-                        </Link>
-                        <Link href="/cloudinary-setup" legacyBehavior passHref>
-                            <NavigationMenuLink>
-                                Cloudinary Setup
-                            </NavigationMenuLink>
-                        </Link>
+                        <NavigationMenuItem className="px-1">
+                            <Link href="/login" legacyBehavior passHref>
+                                <NavigationMenuLink>Login</NavigationMenuLink>
+                            </Link>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem className="px-1">
+                            <Link href="/messaging" legacyBehavior passHref>
+                                <NavigationMenuLink>
+                                    Messaging
+                                </NavigationMenuLink>
+                            </Link>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem className="px-1">
+                            <Link href="/chatting" legacyBehavior passHref>
+                                <NavigationMenuLink>
+                                    Chatting
+                                </NavigationMenuLink>
+                            </Link>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem className="px-1">
+                            <Link
+                                href="/cloudinary-setup"
+                                legacyBehavior
+                                passHref
+                            >
+                                <NavigationMenuLink>
+                                    Cloudinary Setup
+                                </NavigationMenuLink>
+                            </Link>
+                        </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu>
                 <h1 className="pb-4 text-5xl font-bold">Discovery page</h1>
