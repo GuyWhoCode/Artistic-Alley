@@ -8,14 +8,15 @@ export default function HomepageCommission({
     price,
     title,
     profilePicture,
-}: // onClick,
+    numBought = "0"
+}:
 {
     imgSrc: string;
     userName: string;
     price: string;
     title: string;
     profilePicture: string;
-    // onClick: () => void;
+    numBought?: string
 }) {
     const router = useRouter();
     const redirectToChat = (e: any, userName: string) => {
@@ -24,7 +25,10 @@ export default function HomepageCommission({
     };
     const size = 350;
     return (
-        <div className=" flex flex-col border-2 relative border-black hover:cursor-pointer hover:bg-muted" onClick={(e) => redirectToChat(e, userName)}>
+        <div
+            className=" flex flex-col border-2 relative border-black hover:cursor-pointer hover:bg-muted"
+            onClick={(e) => redirectToChat(e, userName)}
+        >
             <div className="relative">
                 <Image src={imgSrc} alt="test" width={size} height={size} />
             </div>
@@ -34,12 +38,17 @@ export default function HomepageCommission({
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <h2 className="pl-14">{userName}</h2>
-                <h1 className=" pl-14 text-base border-1 border-black pl-10 md:text-xl lg:text-xl">
+                <h1 className=" pl-14 text-base border-1 border-black pl-10 md:text-xl">
                     {title}
                 </h1>
-                <p className="ml-[55%] md:ml-[65%] lg:ml-[75%] text-base md:text-xl lg:text-xl text-orange-400">
-                    ${price}
-                </p>
+                <div className="flow-root">
+                    <p className="float-left pl-2 text-base md:text-xl text-orange-400">
+                        ${price}
+                    </p>
+                    <p className="float-right pr-2 text-base md:text-xl lg:text-lg text-slate-400">
+                        {numBought} bought
+                    </p>
+                </div>
             </div>
         </div>
     );
