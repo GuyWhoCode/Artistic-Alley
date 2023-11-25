@@ -1,18 +1,9 @@
-<<<<<<< HEAD
 module.exports = {
     reactStrictMode: true,
+    reactExperimental: {
+        serverComponents: false,
+    },
     images: {
         domains: ["picsum.photos"],
     },
 };
-=======
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
-
-// module.exports = nextConfig
-module.exports = {
-    reactExperimental: {
-      serverComponents: false,
-    },
-  };
->>>>>>> main
