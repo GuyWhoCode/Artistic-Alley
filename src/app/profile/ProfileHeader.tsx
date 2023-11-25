@@ -9,15 +9,13 @@ interface ProfileHeaderProps {
   profilePictureUrl: string;
 }
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ username, profilePictureUrl }) => {
-  return (
-    <div className={styles.profileHeader}>
-      <ProfilePicture imageUrl={profilePictureUrl} altText={`${username}'s profile`} />
-        <div className = {styles.usernameContainer}>
-          <h2>{username}</h2>
-      </div>
+const ProfileHeader = ({ username, profilePictureUrl }: ProfileHeaderProps) => (
+  <div className={styles.profileHeader}>
+    <ProfilePicture imageUrl={profilePictureUrl} altText={`${username}'s profile`} />
+    <div className={styles.usernameContainer}>
+      <h2>{username}</h2>
     </div>
-  );
-};
+  </div>
+);
 
 export default ProfileHeader;

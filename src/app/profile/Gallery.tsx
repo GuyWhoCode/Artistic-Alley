@@ -6,7 +6,7 @@ interface GalleryProps {
     images: Array<{ imageUrl: string; altText: string }>;
   }
 
-  const Gallery: React.FC<GalleryProps> = ({ images }) => {
+  const Gallery = ({ images }: GalleryProps) => {
     return (
       <div className={styles.gallery}>
         {images.map((image, index) => (
@@ -15,5 +15,6 @@ interface GalleryProps {
       </div>
     );
   };
+  
   
   export default Gallery;

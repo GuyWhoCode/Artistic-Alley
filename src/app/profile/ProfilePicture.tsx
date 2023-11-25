@@ -8,12 +8,10 @@ interface ProfilePictureProps {
   altText: string;
 }
 
-const ProfilePicture: React.FC<ProfilePictureProps> = ({ imageUrl, altText }) => {
-  return (
-    <div className={styles.profilePicture}>
-      <img src={imageUrl} />
-    </div>
-  );
-};
+const ProfilePicture = ({ imageUrl, altText }: ProfilePictureProps) => (
+  <div className={styles.profilePicture}>
+    <img src={imageUrl} alt={altText} />
+  </div>
+);
 
 export default ProfilePicture;

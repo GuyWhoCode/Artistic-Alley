@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Profile.module.css';
 
-const ProfileBackground: React.FC = () => {
+const ProfileBackground = () => {
     return <div className={styles.profileBackground}></div>;
   };
   

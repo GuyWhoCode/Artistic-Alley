@@ -25,7 +25,7 @@ const userData = {
 ]
 };
 
-const ProfilePage: React.FC = () => {
+const ProfilePage = () => {
   return (
     <main className={styles.profilePage}>
        <ProfileBackground /> {/* Add the ProfileBackground component here */} 
