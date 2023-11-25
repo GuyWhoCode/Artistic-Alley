@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
-import HomepageCommision from "@/components/homepageCommision";
+import HomepageCommission from "@/components/homepageCommission";
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -11,6 +11,7 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import NavItem from "@/components/ui/navItem";
 
 export default function Page() {
     const pfpUrlPlaceholder =
@@ -20,84 +21,53 @@ export default function Page() {
             <div className="flex flex-col items-center justify-center py-[60px] min-w-[320px]">
                 <NavigationMenu>
                     <NavigationMenuList>
-                        <NavigationMenuItem className="px-1 br">
-                            <Link href="/profile" legacyBehavior passHref>
-                                <NavigationMenuLink>Profile</NavigationMenuLink>
-                            </Link>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem className="px-1">
-                            <Link href="/signup" legacyBehavior passHref>
-                                <NavigationMenuLink>Sign Up</NavigationMenuLink>
-                            </Link>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem className="px-1">
-                            <Link href="/login" legacyBehavior passHref>
-                                <NavigationMenuLink>Login</NavigationMenuLink>
-                            </Link>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem className="px-1">
-                            <Link href="/messaging" legacyBehavior passHref>
-                                <NavigationMenuLink>
-                                    Messaging
-                                </NavigationMenuLink>
-                            </Link>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem className="px-1">
-                            <Link href="/chatting" legacyBehavior passHref>
-                                <NavigationMenuLink>
-                                    Chatting
-                                </NavigationMenuLink>
-                            </Link>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem className="px-1">
-                            <Link
-                                href="/cloudinary-setup"
-                                legacyBehavior
-                                passHref
-                            >
-                                <NavigationMenuLink>
-                                    Cloudinary Setup
-                                </NavigationMenuLink>
-                            </Link>
-                        </NavigationMenuItem>
+                        <NavItem itemName="Profile" path="/profile" />
+                        <NavItem itemName="Sign Up" path="/signup" />
+                        <NavItem itemName="Login" path="/signin" />
+                        <NavItem itemName="Messaging" path="/messaging" />
+                        <NavItem itemName="Chatting" path="/chatting" />
+                        <NavItem
+                            itemName="Cloudinary Setup"
+                            path="/cloudinary-setup"
+                        />
                     </NavigationMenuList>
                 </NavigationMenu>
                 <h1 className="pb-4 text-5xl font-bold">Discovery page</h1>
                 <Input className=" max-w-[480px] mb-3 " placeholder="Search" />
                 <div className="grid grid-cols-2 gap-4 px-2">
-                    <HomepageCommision
+                    <HomepageCommission
                         imgSrc="https://picsum.photos/200"
                         userName="User Name"
-                        price="Price $$$"
-                        title="Commision Title"
+                        price="123.45"
+                        title="Commission Title"
                         profilePicture={pfpUrlPlaceholder}
                     />
-                    <HomepageCommision
+                    <HomepageCommission
                         imgSrc="https://picsum.photos/200"
                         userName="User Name"
-                        price="Price $$$"
-                        title="Commision Title"
+                        price="123.45"
+                        title="Commission Title"
                         profilePicture={pfpUrlPlaceholder}
                     />
-                    <HomepageCommision
+                    <HomepageCommission
                         imgSrc="https://picsum.photos/200"
                         userName="User Name"
-                        price="Price $$$"
-                        title="Commision Title"
+                        price="123.45"
+                        title="Commission Title"
                         profilePicture={pfpUrlPlaceholder}
                     />
-                    <HomepageCommision
+                    <HomepageCommission
                         imgSrc="https://picsum.photos/200"
                         userName="User Name"
-                        price="Price $$$"
-                        title="Commision Title"
+                        price="123.45"
+                        title="Commission Title"
                         profilePicture={pfpUrlPlaceholder}
                     />
-                    <HomepageCommision
+                    <HomepageCommission
                         imgSrc="https://picsum.photos/200"
                         userName="User Name"
-                        price="Price $$$"
-                        title="Commision Title"
+                        price="123.45"
+                        title="Commission Title"
                         profilePicture={pfpUrlPlaceholder}
                     />
                 </div>
