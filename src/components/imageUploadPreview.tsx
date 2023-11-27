@@ -7,7 +7,7 @@ interface ImagePreviewProps {
     onUploadSuccess: (data: any) => void;
 }
 
-export default function imageUploadPreview({
+export default function ImageUploadPreview({
     onUploadSuccess,
 }: ImagePreviewProps) {
     const [imageSrc, setImageSrc] = useState<string | undefined>("");
@@ -105,3 +105,4 @@ export default function imageUploadPreview({
         </>
     );
 }
+
