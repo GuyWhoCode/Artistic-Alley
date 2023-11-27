@@ -5,7 +5,7 @@ interface ChatHeaderProps {
     username: string;
 }
 
-const ChatHeader: React.FC<ChatHeaderProps> = ({ username }) => {
+const ChatHeader = ({ username }: ChatHeaderProps) => {
     return (
         <div style={{ textAlign: 'center', padding: '10px', background: 'white', color: 'black'}}>
             {'Other Users Username: ' + username}

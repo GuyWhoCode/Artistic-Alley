@@ -7,7 +7,7 @@ interface MessageProps {
   userProfilePicture: string; // URL of the user's profile picture
 }
 
-const Message: React.FC<MessageProps> = ({ text, isMyMessage, userProfilePicture }) => {
+const Message = ({ text, isMyMessage, userProfilePicture }: MessageProps) => {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: isMyMessage ? 'flex-end' : 'flex-start' }}>
       {!isMyMessage && <Avatar><AvatarImage src={userProfilePicture} alt="Other User" /></Avatar>}
