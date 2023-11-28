@@ -5,7 +5,7 @@ import Link from "next/link";
 import ImageUploadPreview from "@/components/imageUploadPreview"; // to import the imageUploadPreview component
 
 export default function Page() {
-    const [imageSrc, setImageSrc] = useState<string | undefined>("");
+    const [imageSrc, setImageSrc] = useState<string>("");
     const [uploadData, setUploadData] = useState<any>(); // Type is currently set to 'any'. Replace 'any' with the type of your upload data that you want.
     // Currently still works with type=any
 
