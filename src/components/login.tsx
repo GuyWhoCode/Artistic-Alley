@@ -5,8 +5,13 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 
+export interface LoginFormData {
+    email: string;
+    password: string;
+}
+
 interface LoginProps {
-    submitForm: () => void;
+    submitForm: (loginData: LoginFormData) => void;
 }
 
 export default function Login({ submitForm }: LoginProps) {
@@ -17,8 +22,7 @@ export default function Login({ submitForm }: LoginProps) {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData);
-        submitForm();
+        submitForm(formData);
     };
 
     const handleChange = (e: React.ChangeEvent) => {

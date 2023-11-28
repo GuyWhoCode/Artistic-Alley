@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-export interface UserFormData {
+export interface NewUserFormData {
     email: string,
     password: string,
     artist: boolean,
@@ -13,7 +13,7 @@ export interface UserFormData {
 }
 
 interface LoginProps {
-    submitForm: (formData: UserFormData) => void;
+    submitForm: (formData: NewUserFormData) => void;
 }
 export default function SignUp({ submitForm }: LoginProps) {
     const [formData, setFormData] = useState({
