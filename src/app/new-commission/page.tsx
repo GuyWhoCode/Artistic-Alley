@@ -5,9 +5,10 @@ import { Commission } from "@/database/types";
 import { useState } from "react";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { db } from "@/database/firebase";
-import ImageUploadPreview, {
-    uploadCloudinary,
-} from "@/components/imageUploadPreview";
+import { uploadCloudinary } from "@/components/imageUploadPreview";
+import NewCommissionForm, {
+    commissionFormData,
+} from "@/components/newCommissionForm";
 
 const IMAGE_HOST =
     "https://res.cloudinary.com/datgtai6b/image/upload/v1700168828/artistic-alley-uploads/";
@@ -21,24 +22,14 @@ function createNewCommission(commission: Commission) {
 export default function Page() {
     const { signedIn, user } = useCurrentUser();
 
-    const [commissionInfo, setCommissionInfo] = useState<Commission>({
-        userId: "",
-        title: "",
-        description: "",
-        price: 0,
-        timesBought: 0,
-        reviews: 0,
-        categories: [],
-        keywords: [],
-        image: "",
-    });
-    
-    function handleSubmission() {
+    function handleSubmission(commissionData: commissionFormData) {
         const updatedCommissionInfo = {
-            ...commissionInfo,
-            userId: user.uid, // Replace 'user.id' with the actual user ID
+            ...commissionData,
+            userId: user.uid,
+            timesBought: 0,
+            reviews: 0,
+            price: parseInt(commissionData.price),
         };
-        setCommissionInfo(updatedCommissionInfo);
         createNewCommission(updatedCommissionInfo);
     }
 
@@ -46,40 +37,7 @@ export default function Page() {
 
     return signedIn ? (
         <main>
-            <h1>Create New Commission</h1>
-
-            <input
-                type="text"
-                name="title"
-                id="title"
-                placeholder="Commission Title"
-            />
-            <br />
-            <textarea
-                name="description"
-                id="description"
-                placeholder="Commission Description"
-            />
-            <ImageUploadPreview imageSrc={commissionInfo.image} setImageSrc={
-                (imageSrc: string) => {
-                    setCommissionInfo({
-                        ...commissionInfo,
-                        image: imageSrc,
-                    });
-                }
-            }/>
-
-            <hr />
-            <br />
-            <label htmlFor="price">$</label>
-            <input type="number" name="price" id="price" placeholder="Price" />
-            <br />
-            <textarea
-                name="categories"
-                id="categories"
-                placeholder="Categories"
-            />
-            <button onClick={handleSubmission}>Save</button>
+            <NewCommissionForm submitForm={handleSubmission} />
         </main>
     ) : (
         <main>
