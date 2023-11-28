@@ -26,6 +26,7 @@ export default function Page() {
                         <NavItem itemName="Login" path="/login" />
                         <NavItem itemName="Messaging" path="/messaging" />
                         <NavItem itemName="Chatting" path="/chatting" />
+                        <NavItem itemName="New Commission" path="/new-commission" />
                         <NavItem
                             itemName="Cloudinary Setup"
                             path="/cloudinary-setup"
