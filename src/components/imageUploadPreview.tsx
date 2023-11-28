@@ -1,18 +1,15 @@
 "use client";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent } from "react";
 interface ImageUploadPreviewProps {
     setImageSrc: (imageSrc: string) => void;
     imageSrc: string;
 }
 
 // When the form is submitted, this function is called and uploads the image online to cloudinary.
-export async function uploadCloudinary(
-    event: FormEvent<HTMLFormElement>
-): Promise<string> {
-    event.preventDefault();
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
+export async function uploadCloudinary(imageLink: string): Promise<string> {
+    // Cloudinary utilizes Form data to upload images through REST API.
+    const formData = new FormData();
+    formData.append("file", imageLink);
 
     //presets go here. The 2nd parameter is the folder the image is uploaded to.
     formData.append("upload_preset", "artistic-alley-uploads");

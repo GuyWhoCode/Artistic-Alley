@@ -2,8 +2,6 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import Link from "next/link";
 import ImageUploadPreview from "@/components/imageUploadPreview";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -84,7 +82,7 @@ export default function NewCommissionForm({ submitForm }: commissionFormProps) {
                             />
                         </div>
                         <div>
-                            <Label htmlFor="image">Thumbnail</Label>
+                            <Label>Thumbnail</Label>
                             <ImageUploadPreview
                                 imageSrc={formData.image}
                                 setImageSrc={(imageSrc: string) => {

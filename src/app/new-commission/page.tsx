@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { addDoc, collection } from "firebase/firestore";
 import { Commission } from "@/database/types";
-import { useState } from "react";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { db } from "@/database/firebase";
 import { uploadCloudinary } from "@/components/imageUploadPreview";
@@ -10,13 +9,20 @@ import NewCommissionForm, {
     commissionFormData,
 } from "@/components/newCommissionForm";
 
-const IMAGE_HOST =
-    "https://res.cloudinary.com/datgtai6b/image/upload/v1700168828/artistic-alley-uploads/";
-const getImageSource = (image: string) => image.split(IMAGE_HOST)[1];
+const IMAGE_HOST = "/artistic-alley-uploads/";
+const getImageSource = (image: string) => {
+    return image.split(IMAGE_HOST)[1];
+};
 
-function createNewCommission(commission: Commission) {
-    console.log(commission);
-    // addDoc(collection(db, "commissions"), commission);
+async function createNewCommission(commission: Commission) {
+    const cloudinaryImageLink = await uploadCloudinary(commission.image);
+    const imageFileName = await getImageSource(cloudinaryImageLink);
+    const finalCommissionInfo = {
+        ...commission,
+        image: imageFileName,
+    };
+
+    addDoc(collection(db, "commissions"), finalCommissionInfo);
 }
 
 export default function Page() {
@@ -32,8 +38,6 @@ export default function Page() {
         };
         createNewCommission(updatedCommissionInfo);
     }
-
-    // https://res.cloudinary.com/datgtai6b/image/upload/v1700168828/artistic-alley-uploads/hom7hm5kjuq5tbpcedhj.jpg
 
     return signedIn ? (
         <main>
