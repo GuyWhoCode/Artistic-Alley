@@ -23,7 +23,7 @@ export default function Page() {
                     <NavigationMenuList>
                         <NavItem itemName="Profile" path="/profile" />
                         <NavItem itemName="Sign Up" path="/signup" />
-                        <NavItem itemName="Login" path="/signin" />
+                        <NavItem itemName="Login" path="/login" />
                         <NavItem itemName="Messaging" path="/messaging" />
                         <NavItem itemName="Chatting" path="/chatting" />
                         <NavItem itemName="New Commission" path="/new-commission" />

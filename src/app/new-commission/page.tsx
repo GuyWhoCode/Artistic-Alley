@@ -3,7 +3,6 @@ import Link from "next/link";
 import { addDoc, collection } from "firebase/firestore";
 import { Commission } from "@/database/types";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { db } from "@/database/firebase";
 
@@ -18,20 +17,25 @@ function createNewCommission(commission: Commission) {
 
 export default function Page() {
     const { signedIn, user } = useCurrentUser();
-    const router = useRouter();
+
+    const [commissionInfo, setCommissionInfo] = useState<Commission>({
+        userId: "",
+        title: "",
+        description: "",
+        price: 0,
+        timesBought: 0,
+        reviews: 0,
+        categories: [],
+        keywords: [],
+        image: "",
+    });
     function handleSubmission() {
-        const newCommission: Commission = {
-            userId: user.uid,
-            title: "",
-            description: "",
-            price: 0,
-            timesBought: 0,
-            reviews: 0,
-            categories: [],
-            keywords: [],
-            image: "",
+        const updatedCommissionInfo = {
+            ...commissionInfo,
+            userId: user.uid, // Replace 'user.id' with the actual user ID
         };
-        createNewCommission(newCommission);
+        setCommissionInfo(updatedCommissionInfo);
+        createNewCommission(updatedCommissionInfo);
     }
 
     // https://res.cloudinary.com/datgtai6b/image/upload/v1700168828/artistic-alley-uploads/hom7hm5kjuq5tbpcedhj.jpg
