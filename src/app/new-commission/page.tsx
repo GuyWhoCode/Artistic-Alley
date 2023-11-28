@@ -5,6 +5,9 @@ import { Commission } from "@/database/types";
 import { useState } from "react";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { db } from "@/database/firebase";
+import ImageUploadPreview, {
+    uploadCloudinary,
+} from "@/components/imageUploadPreview";
 
 const IMAGE_HOST =
     "https://res.cloudinary.com/datgtai6b/image/upload/v1700168828/artistic-alley-uploads/";
@@ -29,6 +32,7 @@ export default function Page() {
         keywords: [],
         image: "",
     });
+    
     function handleSubmission() {
         const updatedCommissionInfo = {
             ...commissionInfo,
@@ -56,7 +60,14 @@ export default function Page() {
                 id="description"
                 placeholder="Commission Description"
             />
-            {/* Upload Image component */}
+            <ImageUploadPreview imageSrc={commissionInfo.image} setImageSrc={
+                (imageSrc: string) => {
+                    setCommissionInfo({
+                        ...commissionInfo,
+                        image: imageSrc,
+                    });
+                }
+            }/>
 
             <hr />
             <br />

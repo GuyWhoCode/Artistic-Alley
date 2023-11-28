@@ -1,8 +1,8 @@
 "use client";
 import { ChangeEvent, FormEvent } from "react";
 interface ImageUploadPreviewProps {
-    setImageSrc: (imageSrc: string | undefined) => void;
-    imageSrc: string | undefined;
+    setImageSrc: (imageSrc: string) => void;
+    imageSrc: string;
 }
 
 // When the form is submitted, this function is called and uploads the image online to cloudinary.
