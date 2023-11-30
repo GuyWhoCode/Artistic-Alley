@@ -8,11 +8,7 @@ import { uploadCloudinary } from "@/components/imageUploadPreview";
 import NewCommissionForm, {
     commissionFormData,
 } from "@/components/newCommissionForm";
-
-const IMAGE_HOST = "/artistic-alley-uploads/";
-const getImageSource = (image: string) => {
-    return image.split(IMAGE_HOST)[1];
-};
+import { getImageSource } from "@/lib/image";
 
 async function createNewCommission(commission: Commission) {
     const cloudinaryImageLink = await uploadCloudinary(commission.image);
