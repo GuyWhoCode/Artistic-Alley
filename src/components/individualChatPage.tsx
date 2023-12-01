@@ -28,7 +28,7 @@ const individualChatPage = () => {
             <div className="p-5">
                 <Message user={user1}>Hello, how are you?</Message>
                 <Message user={user2}>Good.</Message>
-                <Message user={user2}>Are your comissions open?</Message>
+                <Message user={user1}>Are your comissions open?</Message>
                 <Message user={user2}>Yes they are.</Message>
                 <Message user={user2}>
                     What type of art are you looking for?
@@ -55,7 +55,7 @@ const individualChatPage = () => {
                 <Message user={user2}>
                     I will have your art done within a month. It will cost $25.
                 </Message>
-                <Message user={user2}>Sounds good. Keep me updated.</Message>
+                <Message user={user1}>Sounds good. Keep me updated.</Message>
                 <Message user={user2}>Will do.</Message>
             </div>
         </>
