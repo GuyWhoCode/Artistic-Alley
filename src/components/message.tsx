@@ -1,49 +1,48 @@
 // used for the individual chatting page
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import Image from "next/image";
 
+// Replace with the actual user interface when implmentation
+interface basicUser {
+    username: string;
+    isMyMessage?: boolean;
+    profile: string;
+}
 interface MessageProps {
-    content: string | React.ReactNode; // accepts either text or images (sent as a link. such as using uploaded image links from cloudinary) as a message
-    isMyMessage: boolean; // to determine whether the message is from me or if its from the other user
-    userProfilePicture: string; // URL of the user's profile picture
+    user: basicUser;
+    images?: string[];
+    children?: string;
 }
 
-const Message = ({
-    content,
-    isMyMessage,
-    userProfilePicture,
-}: MessageProps) => {
+const Message = ({ user, images, children }: MessageProps) => {
     return (
         <div
-            style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: isMyMessage ? "flex-end" : "flex-start",
-            }}
+            className={`flex items-center 
+            ${user.isMyMessage ? "flex-row-reverse" : "flex-row"}`}
         >
-            {!isMyMessage && (
-                <Avatar>
-                    <AvatarImage src={userProfilePicture} alt="Other User" />
-                </Avatar>
-            )}
+            <Avatar>
+                <AvatarImage src={user.profile} alt={`User ${user.username}`} />
+                <AvatarFallback>{user.username.charAt(0)}</AvatarFallback>
+            </Avatar>
             <div
-                style={{
-                    display: "inline-block",
-                    padding: "8px",
-                    background: isMyMessage ? "#e56c68" : "#ddd",
-                    borderRadius: "8px",
-                    marginLeft: isMyMessage ? "0" : "4px",
-                    marginRight: isMyMessage ? "4px" : "0",
-                }}
+                className={`inline-block p-2 m-1 rounded-md
+                ${user.isMyMessage ? "bg-[#e56c68] mr-2" : "bg-[#ddd] ml-2"}
+                `}
             >
-                {/* Content: The actual message whether its text or an image link to the image*/}
-                {content}
+                {children}
+                {images &&
+                    images.map((src, idx) => (
+                        <Image
+                            className="my-2"
+                            src={src}
+                            key={`${src}_${idx}`}
+                            alt="Image"
+                            width={200}
+                            height={500}
+                        />
+                    ))}
             </div>
-            {isMyMessage && (
-                <Avatar>
-                    <AvatarImage src={userProfilePicture} alt="Your Profile" />
-                </Avatar>
-            )}
         </div>
     );
 };
