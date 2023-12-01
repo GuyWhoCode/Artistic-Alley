@@ -2,6 +2,7 @@
 import React from "react";
 import Message from "./message";
 import ChatHeader from "./chatHeader";
+import { createImageSource } from "@/lib/image";
 
 const individualChatPage = () => {
     // these image links are from images stored on cloudinary but any image link also works
@@ -9,14 +10,16 @@ const individualChatPage = () => {
     const user1 = {
         username: "Fiasco",
         isMyMessage: true,
-        profile:
-            "https://res.cloudinary.com/datgtai6b/image/upload/v1701058704/artistic-alley-uploads/obzu8iutitw6rjzytxao.jpg",
+        profile: createImageSource(
+            "/v1701058704/artistic-alley-uploads/obzu8iutitw6rjzytxao.jpg"
+        ),
     };
     // this is the user that is being messaged
     const user2 = {
         username: "Mocha",
-        profile:
-            "https://res.cloudinary.com/datgtai6b/image/upload/v1701058862/artistic-alley-uploads/rd7zyg7s2czx91oxoer4.jpg",
+        profile: createImageSource(
+            "/v1701058862/artistic-alley-uploads/rd7zyg7s2czx91oxoer4.jpg"
+        ),
     };
 
     return (
@@ -37,7 +40,9 @@ const individualChatPage = () => {
                 <Message
                     user={user1}
                     images={[
-                        "https://res.cloudinary.com/datgtai6b/image/upload/v1701058704/artistic-alley-uploads/obzu8iutitw6rjzytxao.jpg",
+                        createImageSource(
+                            "/v1701058704/artistic-alley-uploads/obzu8iutitw6rjzytxao.jpg"
+                        ),
                     ]}
                 />
                 <Message user={user1}>
