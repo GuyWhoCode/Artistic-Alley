@@ -14,6 +14,7 @@ import {
     UserCircle2,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/Image";
 
 const MobileNavbar = () => {
     return (
@@ -59,17 +60,27 @@ const MobileNavbar = () => {
 };
 const DesktopNavbar = () => {
     return (
-        <NavigationMenu className="bg-[#F46767] p-2 mt-0 fixed max-w-none w-full z-10 top-0 justify-center md:flex hidden">
-            <NavigationMenuList>
-                <NavItem itemName="Profile" path="/profile" />
-                <NavItem itemName="Sign Up" path="/signup" />
-                <NavItem itemName="Login" path="/login" />
-                <NavItem itemName="Messaging" path="/messaging" />
-                <NavItem itemName="Chatting" path="/chatting" />
-                <NavItem itemName="New Commission" path="/new-commission" />
-                <NavItem itemName="Cloudinary Setup" path="/cloudinary-setup" />
-            </NavigationMenuList>
-        </NavigationMenu>
+        <>
+            <NavigationMenu className="bg-[#F46767] p-2 mt-0 fixed max-w-none w-full z-10 top-0 justify-center md:flex hidden">
+                <NavigationMenuList>
+                    <Image
+                        src="/ArtisticAlleylogo.png"
+                        alt=""
+                        priority={true}
+                        width="50"
+                        height="50"
+                        style={{ width: "auto", height: "auto" }}
+                    ></Image>
+                    <NavItem itemName="Profile" path="/profile" />
+                    <NavItem itemName="Sign Up" path="/signup" />
+                    <NavItem itemName="Login" path="/login" />
+                    <NavItem itemName="Messaging" path="/messaging" />
+                    <NavItem itemName="Chatting" path="/chatting" />
+                    <NavItem itemName="New Commission" path="/new-commission" />
+                    <NavItem itemName="Cloudinary Setup" path="/cloudinary-setup"/>
+                </NavigationMenuList>
+            </NavigationMenu>
+        </>
     );
 };
 export default function Page() {
@@ -80,6 +91,8 @@ export default function Page() {
             <DesktopNavbar />
             <MobileNavbar />
             <div className="flex flex-col items-center justify-center py-[60px] min-w-[320px]">
+                <br></br>
+                <br></br>
                 <h1 className="pb-4 text-5xl font-bold">Discovery page</h1>
                 <Input className=" max-w-[480px] mb-3 " placeholder="Search" />
                 <div className="grid grid-cols-2 gap-4 px-2">
