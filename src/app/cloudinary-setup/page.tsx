@@ -2,6 +2,7 @@
 import { useState, FormEvent } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import ImageUploadPreview from "@/components/imageUploadPreview"; // to import the imageUploadPreview component
 
 export default function Page() {
@@ -50,6 +51,14 @@ export default function Page() {
 
             <main>
                 <h1>Cloudinary Image Uploader</h1>
+                <Image
+                    src="/cloudupload.png"
+                    alt=""
+                    priority={true}
+                    width="200"
+                    height="50"
+                    style={{ width: "auto", height: "auto" }}
+                ></Image>
 
                 <p>Upload your image online to Cloudinary!</p>
                 <form
