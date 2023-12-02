@@ -10,8 +10,14 @@ import {
 } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import ChatHeader from "@/components/chatHeader";
+import { createImageSource } from "@/lib/image";
+import ChatMessage from "@/components/message";
 import { Message } from "@/database/types";
-
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useMessages } from "@/hooks/useMessages";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 // Replace with actual chat room ID
 // and user ID
@@ -21,58 +27,64 @@ const userID = "";
 const chatRoom = collection(db, "chats");
 
 export default function Chat({ params }: { params: { user: string } }) {
-    const currentRoom = doc(chatRoom, chatRoomId);
-    const [messages, setMessages] = useState<Message[]>([]);
-    const messagesCollection = collection(currentRoom, "messages");
-    const q = query(messagesCollection, orderBy("timestamp"));
-    useEffect(() => {
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            const m = snapshot.docs.map((doc) => {
-                return { id: doc.id, ...doc.data() } as Message;
-            });
-            console.log(m);
-            setMessages(m);
-        });
-        return () => {
-            unsubscribe();
-        };
-    }, []);
+    const user1 = {
+        username: "Fiasco",
+        isMyMessage: true,
+        profile: createImageSource(
+            "/v1701058704/artistic-alley-uploads/obzu8iutitw6rjzytxao.jpg"
+        ),
+    };
+    // this is the user that is being messaged
+    const user2 = {
+        username: "Mocha",
+        profile: createImageSource(
+            "/v1701058862/artistic-alley-uploads/rd7zyg7s2czx91oxoer4.jpg"
+        ),
+    };
 
-    const handleSubmit = (e: any) => {
+    const [input, setInput] = useState("");
+    const currentRoom = doc(chatRoom, chatRoomId);
+    const messages = useMessages(currentRoom);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInput(e.target.value);
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const message = e.target[0].value as string;
         const messageData: Omit<Message, "id"> = {
             userId: userID,
-            body: message,
+            body: input,
             timestamp: Date.now(),
             imageId: [],
         };
+        setInput("");
         addDoc(collection(currentRoom, "messages"), messageData).catch(
             (err) => {
                 console.log(err);
             }
         );
     };
-
     return (
-        <div className="flex flex-col items-center h-full justify-center pt-[60px]">
-            <p className="text-9xl font-bold">Username: {params.user}</p>
-            {messages?.map((message) => (
-                <div key={message.id} className="py-2">
-                    <p>User ID: {message.userId}</p>
-                    <p>Message: {message.body}</p>
-                    <p>
-                        Timestamp:{" "}
-                        {new Date(message.timestamp).toLocaleTimeString()}
-                    </p>
-                    <hr />
-                </div>
-            ))}
-            <form onSubmit={handleSubmit}>
-                <input type="text" />
-                <button type="submit">Send</button>
-            </form>
-            <Link href={`/messaging`}>Go Back to Messaging</Link>
-        </div>
+        <>
+            <ChatHeader username={user2.username} />
+            <div className="p-5">
+                {messages?.map((message) => (
+                    <ChatMessage user={user1} key={message.id}>
+                        {message.body}
+                    </ChatMessage>
+                ))}
+                <form onSubmit={handleSubmit} className="flex space-x-2">
+                    <Input
+                        type="text"
+                        placeholder="Enter your message"
+                        onChange={handleChange}
+                        value={input}
+                    />
+                    <Button type="submit">Send</Button>
+                </form>
+                <Link href={`/messaging`}>Go Back to Messaging</Link>
+            </div>
+        </>
     );
 }
