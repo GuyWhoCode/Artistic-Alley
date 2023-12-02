@@ -14,7 +14,7 @@ import {
     UserCircle2,
 } from "lucide-react";
 import Link from "next/link";
-import Image from "next/Image";
+import Image from "next/image";
 
 const MobileNavbar = () => {
     return (
