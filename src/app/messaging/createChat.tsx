@@ -6,7 +6,7 @@ import { Chat } from "@/database/types";
 import useUserData from "@/hooks/useUserData";
 
 export function CreateChatroomForm() {
-    const { userDoc } = useUserData("FG3zwzko7Ja03xvaEG2K51EPB882");
+    const { userDoc } = useUserData();
     const [input, setInput] = useState({
         chatName: "",
         userId: "",
@@ -22,9 +22,6 @@ export function CreateChatroomForm() {
             artistId: "",
         };
         addDoc(collection(db, "chats"), chatroomData).then((doc) => {
-            // updateDoc(userDoc.ref, {
-            //     chats: [...userDoc.data().chats, doc.id],
-            // });
             console.log("Document written with ID: ", doc.id);
         });
 

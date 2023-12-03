@@ -19,16 +19,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useMessages } from "@/hooks/useMessages";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useCollection, useCollectionData } from "react-firebase-hooks/firestore";
+import useUserData from "@/hooks/useUserData";
 
 // Replace with actual chat room ID
 // and user ID
-const chatRoomId = "rYPwMBqxIjEzRCbMw94P";
-const userID = "HchESellDUNOaJoFuXFf";
 
 const chatRoom = collection(db, "chats");
 
-export default function Chat({ params }: { params: { user: string } }) {
+export default function Chat({ params }: { params: { chat: string } }) {
+    const userId = useUserData().userDoc?.id;
     const user1 = {
         username: "Fiasco",
         isMyMessage: true,
@@ -45,9 +45,9 @@ export default function Chat({ params }: { params: { user: string } }) {
     };
 
     const [input, setInput] = useState("");
-    const currentRoom = doc(chatRoom, chatRoomId);
+    const currentRoom = doc(collection(db, "chats"), params.chat);
     // const messages = useMessages(currentRoom);
-    const [messages, loading, error] = useCollectionData(query(collection(currentRoom, "messages"), orderBy("timestamp")));
+    const [messages, loading, error] = useCollection(query(collection(currentRoom, "messages"), orderBy("timestamp")));
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value);
@@ -55,8 +55,9 @@ export default function Chat({ params }: { params: { user: string } }) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (userId === undefined) return console.error("User not found");
         const messageData: Omit<Message, "id"> = {
-            userId: userID,
+            userId: userId,
             body: input,
             timestamp: Date.now(),
             imageId: [],
@@ -72,9 +73,9 @@ export default function Chat({ params }: { params: { user: string } }) {
         <>
             <ChatHeader username={user2.username} />
             <div className="p-5">
-                {messages?.map((message) => (
+                {messages?.docs.map((message) => (
                     <ChatMessage user={user1} key={message.id}>
-                        {message.body}
+                        {message.data().body}
                     </ChatMessage>
                 ))}
                 <form onSubmit={handleSubmit} className="flex space-x-2">
