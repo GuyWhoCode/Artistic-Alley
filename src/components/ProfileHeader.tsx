@@ -1,7 +1,7 @@
 // components/ProfileHeader.tsx
-import ProfilePicture from './ProfilePicture'; 
+import ProfilePicture from './ProfilePicture';
 import React from 'react';
-import styles from './Profile.module.css'; 
+import styles from './Profile.module.css';
 
 
 interface ProfileHeaderProps {
