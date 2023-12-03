@@ -7,22 +7,24 @@ import {
     onSnapshot,
     orderBy,
     query,
+    where,
 } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ChatHeader from "@/components/chatHeader";
 import { createImageSource } from "@/lib/image";
 import ChatMessage from "@/components/message";
-import { Message } from "@/database/types";
+import { Message, User } from "@/database/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useMessages } from "@/hooks/useMessages";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
 // Replace with actual chat room ID
 // and user ID
-const chatRoomId = "";
-const userID = "";
+const chatRoomId = "rYPwMBqxIjEzRCbMw94P";
+const userID = "HchESellDUNOaJoFuXFf";
 
 const chatRoom = collection(db, "chats");
 
@@ -44,7 +46,8 @@ export default function Chat({ params }: { params: { user: string } }) {
 
     const [input, setInput] = useState("");
     const currentRoom = doc(chatRoom, chatRoomId);
-    const messages = useMessages(currentRoom);
+    // const messages = useMessages(currentRoom);
+    const [messages, loading, error] = useCollectionData(query(collection(currentRoom, "messages"), orderBy("timestamp")));
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value);
