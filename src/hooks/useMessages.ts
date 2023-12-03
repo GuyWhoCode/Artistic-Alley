@@ -13,12 +13,11 @@ import { Message } from "@/database/types";
 
 /**
  * Fetches all messages from a chat room
- * @param chatRoom The DocumentReference≠ of the chat room
+ * @param chatRoom The DocumentReference of the chat room
  * @returns An array of messages
  */
 export const useMessages = (chatRoom: DocumentReference) => {
     const [messages, setMessages] = useState<Message[]>([]);
-    
 
     useEffect(() => {
         const messagesCollection = collection(chatRoom, "messages");
