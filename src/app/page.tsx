@@ -14,9 +14,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/database/firebase";
-import { collection, query, doc, getDoc, getDocs } from "firebase/firestore";
-import { useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
 import { Commission } from "@/database/types";
+import { createImageSource } from "@/lib/image";
 
 const FetchCommissions = async () => {
     const test: Commission[] = [];
@@ -28,7 +28,7 @@ const FetchCommissions = async () => {
                 userId: data.userId,
                 title: data.title,
                 price: data.price,
-                image: data.image,
+                image: createImageSource(data.image),
                 timesBought: data.timesBought,
                 description: data.description,
                 categories: data.categories,
@@ -44,8 +44,8 @@ const FetchCommissions = async () => {
             {test.map((commission, index) => (
                 <HomepageCommission
                     key={index}
-                    // imgSrc={commission.image}
-                    imgSrc={pfpUrlPlaceholder}
+                    imgSrc={commission.image}
+                    // imgSrc={pfpUrlPlaceholder}
                     userName={commission.userId}
                     price={String(commission.price)}
                     title={commission.title}
