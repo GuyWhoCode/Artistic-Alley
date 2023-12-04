@@ -14,29 +14,56 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/database/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { Commission } from "@/database/types";
 import { createImageSource } from "@/lib/image";
 
+const getUserData = async (userId: string) => {
+    const userRef = collection(db, "users");
+    const q = query(userRef, where("id", "==", userId));
+    const querySnapshot = await getDocs(q);
+    const data = querySnapshot.docs[0].data();
+    return data;
+}
+
 const FetchCommissions = async () => {
+    // Change test name to something better
     const test: Commission[] = [];
     const commRef = collection(db, "commissions");
-    await getDocs(commRef).then((res) => {
-        res.docs.forEach((doc) => {
-            const data = doc.data();
-            test.push({
-                userId: data.userId,
-                title: data.title,
-                price: data.price,
-                image: createImageSource(data.image),
-                timesBought: data.timesBought,
-                description: data.description,
-                categories: data.categories,
-                keywords: data.keywords,
-                reviews: data.reviews,
-            });
+    // await getDocs(commRef).then(async (res) => {
+    //     res.docs.forEach(async (doc) => {
+    //         const data = doc.data();
+    //         const userInfo = await getUserData(data.userId);
+    //         test.push({
+    //             userId: userInfo.username,
+    //             title: data.title,
+    //             price: data.price,
+    //             image: createImageSource(data.image),
+    //             timesBought: data.timesBought,
+    //             description: data.description,
+    //             categories: data.categories,
+    //             keywords: data.keywords,
+    //             reviews: data.reviews,
+    //         });
+    //     });
+    // });
+    const docs = await getDocs(commRef);
+    for (const doc of docs.docs) {
+        const data = doc.data();
+        const userInfo = await getUserData(data.userId);
+        test.push({
+            userId: userInfo.username,
+            title: data.title,
+            price: data.price,
+            image: createImageSource(data.image),
+            timesBought: data.timesBought,
+            description: data.description,
+            categories: data.categories,
+            keywords: data.keywords,
+            reviews: data.reviews,
         });
-    });
+    }
+    
     const pfpUrlPlaceholder =
         "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.6435-9/180978949_314228950059549_1005358403722529104_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=be3454&_nc_ohc=t-kEFO4r0oEAX8dCX0N&_nc_ht=scontent-sjc3-1.xx&oh=00_AfDDGu1dOSs-m8ToepSFqE3SCwGCN2ypyZgHjtUvibf2tQ&oe=6576618E";
     return (
@@ -45,7 +72,6 @@ const FetchCommissions = async () => {
                 <HomepageCommission
                     key={index}
                     imgSrc={commission.image}
-                    // imgSrc={pfpUrlPlaceholder}
                     userName={commission.userId}
                     price={String(commission.price)}
                     title={commission.title}

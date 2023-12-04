@@ -8,15 +8,14 @@ export default function HomepageCommission({
     price,
     title,
     profilePicture,
-    numBought = "0"
-}:
-{
+    numBought = "0",
+}: {
     imgSrc: string;
     userName: string;
     price: string;
     title: string;
     profilePicture: string;
-    numBought?: string
+    numBought?: string;
 }) {
     const router = useRouter();
     const redirectToChat = (e: any, userName: string) => {
@@ -29,8 +28,8 @@ export default function HomepageCommission({
             className=" flex flex-col border-2 relative border-black hover:cursor-pointer hover:bg-muted"
             onClick={(e) => redirectToChat(e, userName)}
         >
-            <div className="relative">
-                <Image src={imgSrc} alt="test" width={size} height={size} />
+            <div className="relative overflow-hidden w-[350px] h-[350px]">
+                <Image style={{ objectFit: "cover" }} src={imgSrc} alt="test" width={size} height={size} />
             </div>
             <div className="pb-0">
                 <Avatar className=" absolute bottom-0 left-0 mb-14 w-[50px] h-[50px]">
