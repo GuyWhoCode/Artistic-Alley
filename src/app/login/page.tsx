@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import Login, { LoginFormData } from "@/components/login";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "@/database/firebase";
@@ -23,6 +24,7 @@ export default function Page() {
                 <Login submitForm={login} />
             )}
             <h1>{user?.email}</h1>
+            <Link href="/">Return Home</Link>
         </main>
     );
 }
