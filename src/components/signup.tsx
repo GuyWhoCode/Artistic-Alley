@@ -10,6 +10,7 @@ export interface NewUserFormData {
     password: string,
     artist: boolean,
     bio: string,
+    username: string,
 }
 
 interface LoginProps {
@@ -21,6 +22,7 @@ export default function SignUp({ submitForm }: LoginProps) {
         password: "",
         artist: false,
         bio: "",
+        username: "",
     });
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -73,6 +75,17 @@ export default function SignUp({ submitForm }: LoginProps) {
                             />
                         </div>
                         <div>
+                            <Label htmlFor="username">Username</Label>
+                            <Input
+                                name="username"
+                                type="text"
+                                id="username"
+                                value={formData.username}
+                                required
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div>
                             <RadioGroup
                                 defaultValue="user"
                                 name="userRole"
@@ -96,6 +109,7 @@ export default function SignUp({ submitForm }: LoginProps) {
                                         <RadioGroupItem
                                             value="default"
                                             id="user-check"
+                                            checked
                                         />
                                         <Label
                                             htmlFor="user-check"
