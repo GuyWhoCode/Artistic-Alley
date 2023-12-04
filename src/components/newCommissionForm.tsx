@@ -41,7 +41,7 @@ export default function NewCommissionForm({ submitForm }: commissionFormProps) {
         }));
     };
     return (
-        <div className="flex items-center justify-center h-screen ">
+        <div className="flex items-center justify-center my-12">
             <div className="p-10 rounded-lg shadow-lg w-96">
                 <h1 className="py-5 text-2xl font-bold text-center">
                     New Commission
