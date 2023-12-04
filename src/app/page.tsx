@@ -125,10 +125,10 @@ const DesktopNavbar = () => {
                 <NavItem itemName="Profile" path="/profile" />
                 {/* <NavItem itemName="Sign Up" path="/signup" /> */}
                 <NavItem itemName="Login" path="/login" />
-                <NavItem itemName="Messaging" path="/messaging" />
+                <NavItem itemName="Messages" path="/messaging" />
                 <NavItem itemName="Chatting" path="/chatting" />
                 <NavItem itemName="New Commission" path="/new-commission" />
-                <NavItem itemName="Cloudinary Setup" path="/cloudinary-setup" />
+                <NavItem itemName="Cloudinary Uploader" path="/cloudinary-setup" />
             </NavigationMenuList>
         </NavigationMenu>
     );
