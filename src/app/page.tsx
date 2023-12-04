@@ -14,11 +14,48 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/database/firebase";
+import { collection, query, doc, getDoc, getDocs } from "firebase/firestore";
+import { useEffect } from "react";
+import { Commission } from "@/database/types";
 
-
-const fetchCommissions = async () => {
-    
-}
+const FetchCommissions = async () => {
+    const test: Commission[] = [];
+    const commRef = collection(db, "commissions");
+    await getDocs(commRef).then((res) => {
+        res.docs.forEach((doc) => {
+            const data = doc.data();
+            test.push({
+                userId: data.userId,
+                title: data.title,
+                price: data.price,
+                image: data.image,
+                timesBought: data.timesBought,
+                description: data.description,
+                categories: data.categories,
+                keywords: data.keywords,
+                reviews: data.reviews,
+            });
+        });
+    });
+    const pfpUrlPlaceholder =
+        "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.6435-9/180978949_314228950059549_1005358403722529104_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=be3454&_nc_ohc=t-kEFO4r0oEAX8dCX0N&_nc_ht=scontent-sjc3-1.xx&oh=00_AfDDGu1dOSs-m8ToepSFqE3SCwGCN2ypyZgHjtUvibf2tQ&oe=6576618E";
+    return (
+        <div className="grid grid-cols-2 gap-4 px-2">
+            {test.map((commission, index) => (
+                <HomepageCommission
+                    key={index}
+                    // imgSrc={commission.image}
+                    imgSrc={pfpUrlPlaceholder}
+                    userName={commission.userId}
+                    price={String(commission.price)}
+                    title={commission.title}
+                    profilePicture={pfpUrlPlaceholder}
+                    numBought={String(commission.timesBought)}
+                />
+            ))}
+        </div>
+    );
+};
 
 const MobileNavbar = () => {
     return (
@@ -87,45 +124,7 @@ export default function Page() {
             <div className="flex flex-col items-center justify-center py-[60px] min-w-[320px]">
                 <h1 className="pb-4 text-5xl font-bold">Discovery page</h1>
                 <Input className=" max-w-[480px] mb-3 " placeholder="Search" />
-                <div className="grid grid-cols-2 gap-4 px-2">
-                    <HomepageCommission
-                        imgSrc="https://picsum.photos/200"
-                        userName="User Name"
-                        price="123.45"
-                        title="Commission Title"
-                        profilePicture={pfpUrlPlaceholder}
-                        numBought="50"
-                    />
-                    <HomepageCommission
-                        imgSrc="https://picsum.photos/200"
-                        userName="User Name"
-                        price="123.45"
-                        title="Commission Title"
-                        profilePicture={pfpUrlPlaceholder}
-                        numBought="132,000"
-                    />
-                    <HomepageCommission
-                        imgSrc="https://picsum.photos/200"
-                        userName="User Name"
-                        price="123.45"
-                        title="Commission Title"
-                        profilePicture={pfpUrlPlaceholder}
-                    />
-                    <HomepageCommission
-                        imgSrc="https://picsum.photos/200"
-                        userName="User Name"
-                        price="123.45"
-                        title="Commission Title"
-                        profilePicture={pfpUrlPlaceholder}
-                    />
-                    <HomepageCommission
-                        imgSrc="https://picsum.photos/200"
-                        userName="User Name"
-                        price="123.45"
-                        title="Commission Title"
-                        profilePicture={pfpUrlPlaceholder}
-                    />
-                </div>
+                <FetchCommissions />
             </div>
         </main>
     );
