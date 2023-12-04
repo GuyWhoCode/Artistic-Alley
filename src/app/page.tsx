@@ -13,6 +13,12 @@ import {
     UserCircle2,
 } from "lucide-react";
 import Link from "next/link";
+import { db } from "@/database/firebase";
+
+
+const fetchCommissions = async () => {
+    
+}
 
 const MobileNavbar = () => {
     return (
