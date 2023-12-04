@@ -22,36 +22,20 @@ const getUserData = async (userId: string) => {
     const userRef = collection(db, "users");
     const q = query(userRef, where("id", "==", userId));
     const querySnapshot = await getDocs(q);
-    const data = querySnapshot.docs[0].data();
-    return data;
-}
+    const userData = querySnapshot.docs[0].data();
+    return userData;
+};
 
 const FetchCommissions = async () => {
-    // Change test name to something better
-    const test: Commission[] = [];
+    const allCommissions: Commission[] = [];
+    const userPfps: string[] = [];
     const commRef = collection(db, "commissions");
-    // await getDocs(commRef).then(async (res) => {
-    //     res.docs.forEach(async (doc) => {
-    //         const data = doc.data();
-    //         const userInfo = await getUserData(data.userId);
-    //         test.push({
-    //             userId: userInfo.username,
-    //             title: data.title,
-    //             price: data.price,
-    //             image: createImageSource(data.image),
-    //             timesBought: data.timesBought,
-    //             description: data.description,
-    //             categories: data.categories,
-    //             keywords: data.keywords,
-    //             reviews: data.reviews,
-    //         });
-    //     });
-    // });
     const docs = await getDocs(commRef);
     for (const doc of docs.docs) {
         const data = doc.data();
         const userInfo = await getUserData(data.userId);
-        test.push({
+        userPfps.push(userInfo.profilePicture);
+        allCommissions.push({
             userId: userInfo.username,
             title: data.title,
             price: data.price,
@@ -63,22 +47,22 @@ const FetchCommissions = async () => {
             reviews: data.reviews,
         });
     }
-    
-    const pfpUrlPlaceholder =
-        "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.6435-9/180978949_314228950059549_1005358403722529104_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=be3454&_nc_ohc=t-kEFO4r0oEAX8dCX0N&_nc_ht=scontent-sjc3-1.xx&oh=00_AfDDGu1dOSs-m8ToepSFqE3SCwGCN2ypyZgHjtUvibf2tQ&oe=6576618E";
+
     return (
         <div className="grid grid-cols-2 gap-4 px-2">
-            {test.map((commission, index) => (
-                <HomepageCommission
-                    key={index}
-                    imgSrc={commission.image}
-                    userName={commission.userId}
-                    price={String(commission.price)}
-                    title={commission.title}
-                    profilePicture={pfpUrlPlaceholder}
-                    numBought={String(commission.timesBought)}
-                />
-            ))}
+            {allCommissions.map((commission, index) => {
+                return (
+                    <HomepageCommission
+                        key={index}
+                        imgSrc={commission.image}
+                        userName={commission.userId}
+                        price={String(commission.price)}
+                        title={commission.title}
+                        profilePicture={userPfps[index]}
+                        numBought={String(commission.timesBought)}
+                    />
+                );
+            })}
         </div>
     );
 };
