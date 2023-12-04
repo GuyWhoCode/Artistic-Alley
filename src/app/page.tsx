@@ -1,4 +1,3 @@
-"use client";
 import { Input } from "@/components/ui/input";
 import HomepageCommission from "@/components/homepageCommission";
 import {
@@ -15,6 +14,59 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { db } from "@/database/firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { Commission } from "@/database/types";
+import { createImageSource } from "@/lib/image";
+
+const getUserData = async (userId: string) => {
+    const userRef = collection(db, "users");
+    const q = query(userRef, where("id", "==", userId));
+    const querySnapshot = await getDocs(q);
+    const userData = querySnapshot.docs[0].data();
+    return userData;
+};
+
+const FetchCommissions = async () => {
+    const allCommissions: Commission[] = [];
+    const userPfps: string[] = [];
+    const commRef = collection(db, "commissions");
+    const docs = await getDocs(commRef);
+    for (const doc of docs.docs) {
+        const data = doc.data();
+        const userInfo = await getUserData(data.userId);
+        userPfps.push(userInfo.profilePicture);
+        allCommissions.push({
+            userId: userInfo.username,
+            title: data.title,
+            price: data.price,
+            image: createImageSource(data.image),
+            timesBought: data.timesBought,
+            description: data.description,
+            categories: data.categories,
+            keywords: data.keywords,
+            reviews: data.reviews,
+        });
+    }
+
+    return (
+        <div className="grid grid-cols-2 gap-4 px-2">
+            {allCommissions.map((commission, index) => {
+                return (
+                    <HomepageCommission
+                        key={index}
+                        imgSrc={commission.image}
+                        userName={commission.userId}
+                        price={String(commission.price)}
+                        title={commission.title}
+                        profilePicture={userPfps[index]}
+                        numBought={String(commission.timesBought)}
+                    />
+                );
+            })}
+        </div>
+    );
+};
 
 const MobileNavbar = () => {
     return (
@@ -60,27 +112,25 @@ const MobileNavbar = () => {
 };
 const DesktopNavbar = () => {
     return (
-        <>
-            <NavigationMenu className="bg-[#F46767] p-2 mt-0 fixed max-w-none w-full z-10 top-0 justify-center md:flex hidden">
-                <NavigationMenuList>
-                    <Image
-                        src="/ArtisticAlleylogo.png"
-                        alt=""
-                        priority={true}
-                        width="50"
-                        height="50"
-                        style={{ width: "auto", height: "auto" }}
-                    ></Image>
-                    <NavItem itemName="Profile" path="/profile" />
-                    <NavItem itemName="Sign Up" path="/signup" />
-                    <NavItem itemName="Login" path="/login" />
-                    <NavItem itemName="Messaging" path="/messaging" />
-                    <NavItem itemName="Chatting" path="/chatting" />
-                    <NavItem itemName="New Commission" path="/new-commission" />
-                    <NavItem itemName="Cloudinary Setup" path="/cloudinary-setup"/>
-                </NavigationMenuList>
-            </NavigationMenu>
-        </>
+        <NavigationMenu className="bg-[#F46767] p-2 mt-0 fixed max-w-none w-full z-10 top-0 justify-center md:flex hidden">
+            <NavigationMenuList>
+                <Image
+                    src="/ArtisticAlleylogo.png"
+                    alt=""
+                    priority={true}
+                    width="50"
+                    height="50"
+                    style={{ width: "auto", height: "auto" }}
+                ></Image>
+                <NavItem itemName="Profile" path="/profile" />
+                <NavItem itemName="Sign Up" path="/signup" />
+                <NavItem itemName="Login" path="/login" />
+                <NavItem itemName="Messaging" path="/messaging" />
+                <NavItem itemName="Chatting" path="/chatting" />
+                <NavItem itemName="New Commission" path="/new-commission" />
+                <NavItem itemName="Cloudinary Setup" path="/cloudinary-setup" />
+            </NavigationMenuList>
+        </NavigationMenu>
     );
 };
 export default function Page() {
@@ -95,45 +145,7 @@ export default function Page() {
                 <br></br>
                 <h1 className="pb-4 text-5xl font-bold">Discovery page</h1>
                 <Input className=" max-w-[480px] mb-3 " placeholder="Search" />
-                <div className="grid grid-cols-2 gap-4 px-2">
-                    <HomepageCommission
-                        imgSrc="https://picsum.photos/200"
-                        userName="User Name"
-                        price="123.45"
-                        title="Commission Title"
-                        profilePicture={pfpUrlPlaceholder}
-                        numBought="50"
-                    />
-                    <HomepageCommission
-                        imgSrc="https://picsum.photos/200"
-                        userName="User Name"
-                        price="123.45"
-                        title="Commission Title"
-                        profilePicture={pfpUrlPlaceholder}
-                        numBought="132,000"
-                    />
-                    <HomepageCommission
-                        imgSrc="https://picsum.photos/200"
-                        userName="User Name"
-                        price="123.45"
-                        title="Commission Title"
-                        profilePicture={pfpUrlPlaceholder}
-                    />
-                    <HomepageCommission
-                        imgSrc="https://picsum.photos/200"
-                        userName="User Name"
-                        price="123.45"
-                        title="Commission Title"
-                        profilePicture={pfpUrlPlaceholder}
-                    />
-                    <HomepageCommission
-                        imgSrc="https://picsum.photos/200"
-                        userName="User Name"
-                        price="123.45"
-                        title="Commission Title"
-                        profilePicture={pfpUrlPlaceholder}
-                    />
-                </div>
+                <FetchCommissions />
             </div>
         </main>
     );

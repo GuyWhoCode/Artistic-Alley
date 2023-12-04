@@ -1,17 +1,6 @@
 module.exports = {
     reactStrictMode: true,
     images: {
-        remotePatterns: [
-            {
-                protocol: "https",
-                hostname: "res.cloudinary.com",
-                pathname: "**",
-            },
-            {
-                protocol: "https",
-                hostname: "picsum.photos",
-                pathname: "**",
-            },
-        ],
+        domains: ["res.cloudinary.com", "scontent-sjc3-1.xx.fbcdn.net"],
     },
 };
