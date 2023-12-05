@@ -6,10 +6,10 @@ import {
 } from "@/components/ui/navigation-menu";
 import NavItem from "@/components/ui/navItem";
 import {
-    Bookmark,
     Home,
     MessageCircle,
     PlusCircle,
+    UploadCloud,
     UserCircle2,
 } from "lucide-react";
 import Link from "next/link";
@@ -18,6 +18,7 @@ import { db } from "@/database/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Commission } from "@/database/types";
 import { createImageSource } from "@/lib/image";
+import ProfilePicture from "@/components/ProfilePicture";
 
 const getUserData = async (userId: string) => {
     const userRef = collection(db, "users");
@@ -80,11 +81,11 @@ const MobileNavbar = () => {
                     Home
                 </Link>
                 <Link
-                    href="/"
+                    href="/cloudinary-setup"
                     className="flex flex-col items-center justify-center"
                 >
-                    <Bookmark size={48} />
-                    Saved
+                    <UploadCloud size={48} />
+                    Upload Image
                 </Link>
                 <Link
                     href="/new-commission"
@@ -113,20 +114,24 @@ const MobileNavbar = () => {
 const DesktopNavbar = () => {
     return (
         <NavigationMenu className="bg-[#F46767] p-2 mt-0 fixed max-w-none w-full z-10 top-0 justify-center md:flex hidden">
-            <NavigationMenuList>
-                <Image
-                    src="/ArtisticAlleylogo.png"
-                    alt=""
-                    priority={true}
-                    width="50"
-                    height="50"
-                    style={{ width: "auto", height: "auto" }}
-                ></Image>
-                <NavItem itemName="Profile" path="/profile" />
-                <NavItem itemName="Login" path="/login" />
+            <NavigationMenuList className="flex gap-5">
+                <Link href="/" className="p-2">
+                    <Image
+                        src="/ArtisticAlleylogo.png"
+                        alt=""
+                        priority={true}
+                        width="50"
+                        height="50"
+                        style={{ width: "auto", height: "auto" }}
+                    />
+                </Link>
+                <NavItem itemName="Account" path="/login" />
                 <NavItem itemName="Messages" path="/messaging" />
                 <NavItem itemName="New Commission" path="/new-commission" />
-                <NavItem itemName="Cloudinary Uploader" path="/cloudinary-setup" />
+                <NavItem
+                    itemName="Cloudinary Uploader"
+                    path="/cloudinary-setup"
+                />
             </NavigationMenuList>
         </NavigationMenu>
     );

@@ -28,7 +28,7 @@ export default function Page() {
         <main>
             <div className="flex flex-col items-center h-full justify-center pt-[60px] max-h-screen">
                 <h1 className="text-3xl font-bold pb-6">Messaging</h1>
-                <Link href="/chatting">Check out full example chatting page.</Link>
+                {/* <Link href="/chatting">Check out full example chatting page.</Link> */}
                 <br></br>
                 <CreateChatroomForm />
 

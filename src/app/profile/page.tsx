@@ -61,7 +61,7 @@ const ProfilePage = () => {
             />
             <ProfileIntroduction bio={userData.bio} />
             <Gallery images={userData.galleryImages} />
-            <Link href="/">Return Home</Link>
+            <Link href="/login">Return to Account</Link>
         </main>
     );
 };
