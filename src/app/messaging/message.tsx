@@ -2,12 +2,7 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
-import { User } from "@/database/types";
-import useUserData from "@/hooks/useUserData";
-import {
-    useCollectionData,
-    useDocumentData,
-} from "react-firebase-hooks/firestore";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 import { db } from "@/database/firebase";
 import { doc } from "firebase/firestore";
 

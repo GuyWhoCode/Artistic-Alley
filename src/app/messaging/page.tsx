@@ -6,9 +6,7 @@ import "../globals.css";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ChatPreview from "@/app/messaging/chatPreview";
 import { CreateChatroomForm } from "./createChat";
-import {
-    useCollection,
-} from "react-firebase-hooks/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 import { collection, or, query, where } from "firebase/firestore";
 import { db } from "@/database/firebase";
 import useUserData from "@/hooks/useUserData";
@@ -27,18 +25,14 @@ export default function Page() {
     return (
         <main>
             <div className="flex flex-col items-center h-full justify-center pt-[60px] max-h-screen">
-                <h1 className="text-3xl font-bold pb-6">Messaging</h1>
-                {/* <Link href="/chatting">Check out full example chatting page.</Link> */}
-                <br></br>
+                <h1 className="text-3xl font-bold mb-2">Messaging</h1>
                 <CreateChatroomForm />
-
                 <ScrollArea className="h-[700px] w-[450px] rounded-md border p-4">
                     {loading && <p>Loading...</p>}
                     {chatrooms &&
                         chatrooms.docs.map((chatroom) => {
                             const data = chatroom.data();
                             return (
-                   
                                 <ChatPreview
                                     key={chatroom.id}
                                     chatId={chatroom.id}
@@ -48,7 +42,6 @@ export default function Page() {
                                     userName={data.chatName}
                                     currentCommision={"test"}
                                 />
-                
                             );
                         })}
                 </ScrollArea>
