@@ -1,9 +1,6 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
-
-// module.exports = nextConfig
 module.exports = {
-    reactExperimental: {
-      serverComponents: false,
+    reactStrictMode: true,
+    images: {
+        domains: ["res.cloudinary.com", "scontent-sjc3-1.xx.fbcdn.net"],
     },
-  };
+};
