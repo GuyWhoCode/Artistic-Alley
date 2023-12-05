@@ -123,10 +123,8 @@ const DesktopNavbar = () => {
                     style={{ width: "auto", height: "auto" }}
                 ></Image>
                 <NavItem itemName="Profile" path="/profile" />
-                {/* <NavItem itemName="Sign Up" path="/signup" /> */}
                 <NavItem itemName="Login" path="/login" />
                 <NavItem itemName="Messages" path="/messaging" />
-                <NavItem itemName="Chatting" path="/chatting" />
                 <NavItem itemName="New Commission" path="/new-commission" />
                 <NavItem itemName="Cloudinary Uploader" path="/cloudinary-setup" />
             </NavigationMenuList>

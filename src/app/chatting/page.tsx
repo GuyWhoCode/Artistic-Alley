@@ -12,7 +12,7 @@ export default function Page() {
                 <IndividualChatPage />
             </div>
             <br></br>
-            <Link href="/">Return Home</Link>
+            <Link href="/messaging">Return to Messages</Link>
         </main>
     );
 }

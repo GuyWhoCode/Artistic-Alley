@@ -1,4 +1,6 @@
 // used for the individual chatting page
+// this page is used to show what a full chat would look like
+// new messages can be entered below and are displayed to the screen
 import React from "react";
 import Message from "./message";
 import ChatHeader from "./chatHeader";
@@ -57,6 +59,14 @@ const individualChatPage = () => {
                 </Message>
                 <Message user={user1}>Sounds good. Keep me updated.</Message>
                 <Message user={user2}>Will do.</Message>
+                <Message
+                    user={user1}
+                    images={[
+                        createImageSource(
+                            "/v1701737334/artistic-alley-uploads/pkkv0tztkiqlznjnfysm.jpg"
+                        ),
+                    ]}
+                />
             </div>
         </>
     );

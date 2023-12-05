@@ -1,3 +1,5 @@
+// this is the chatting home page. as well as the chatting functionality page.
+// it shows how real time chatting would look like
 "use client";
 import Link from "next/link";
 import "../globals.css";
@@ -28,7 +30,8 @@ export default function Page() {
         <main>
             <div className="flex flex-col items-center h-full justify-center pt-[60px] max-h-screen">
                 <h1 className="text-3xl font-bold pb-6">Messaging</h1>
-                <Link href="/">Return Home</Link>
+                <Link href="/chatting">Check out full example chatting page.</Link>
+                <br></br>
                 <CreateChatroomForm />
 
                 <ScrollArea className="h-[700px] w-[450px] rounded-md border p-4">
@@ -37,6 +40,7 @@ export default function Page() {
                         chatrooms.docs.map((chatroom) => {
                             const data = chatroom.data();
                             return (
+                   
                                 <ChatPreview
                                     key={chatroom.id}
                                     chatId={chatroom.id}
@@ -46,10 +50,12 @@ export default function Page() {
                                     userName={data.chatName}
                                     currentCommision={"test"}
                                 />
+                
                             );
                         })}
                 </ScrollArea>
             </div>
+            <Link href="/">Return Home</Link>
         </main>
     );
 }
