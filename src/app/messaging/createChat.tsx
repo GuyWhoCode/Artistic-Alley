@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-import { collection, addDoc, setDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/database/firebase";
 import { Chat } from "@/database/types";
 import useUserData from "@/hooks/useUserData";
 
 export function CreateChatroomForm() {
-    const { userDoc } = useUserData();
+    const [userDoc] = useUserData();
     const [input, setInput] = useState({
         chatName: "",
         userId: "",
@@ -19,13 +19,13 @@ export function CreateChatroomForm() {
         const chatroomData: Chat = {
             chatName: input.chatName,
             userId: userDoc.id,
-            artistId: "",
+            artistId: input.artistId,
         };
         addDoc(collection(db, "chats"), chatroomData).then((doc) => {
             console.log("Document written with ID: ", doc.id);
         });
 
-        setInput({ ...input, chatName: "" });
+        setInput({ ...input, chatName: "", userId: userDoc.id, artistId: "" });
     };
 
     return (

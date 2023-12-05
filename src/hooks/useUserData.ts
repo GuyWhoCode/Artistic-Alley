@@ -1,14 +1,14 @@
 import { db, auth } from "@/database/firebase";
-import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
+import { DocumentSnapshot, collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import useCurrentUser from "./useCurrentUser";
 
 /**
  * Fetches the user data of the current user
  * @param uid The uid of the user to fetch the data of (defaults to the current user)
- * @returns The document of the user
+ * @returns The document snapshot of the user data and a boolean indicating whether the data is still loading
  */
-export default function useUserData(uid?: string) {
+export default function useUserData(uid?: string): [DocumentSnapshot | undefined, boolean] {
     const {user} = useCurrentUser();
     if (!uid) uid = user?.uid;
     const [value, loading] = useCollection(
@@ -16,5 +16,5 @@ export default function useUserData(uid?: string) {
     ); 
     const userDoc = value?.docs[0];
 
-    return {userDoc, loading};
+    return [userDoc, loading];
 }

@@ -2,7 +2,7 @@
 // this page is used to show what a full chat would look like
 // new messages can be entered below and are displayed to the screen
 import React from "react";
-import Message from "./message";
+import Message from "../app/messaging/[chat]/message";
 import ChatHeader from "./chatHeader";
 import { createImageSource } from "@/lib/image";
 

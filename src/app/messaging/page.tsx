@@ -8,15 +8,13 @@ import ChatPreview from "@/app/messaging/chatPreview";
 import { CreateChatroomForm } from "./createChat";
 import {
     useCollection,
-    useCollectionData,
-    useDocumentDataOnce,
 } from "react-firebase-hooks/firestore";
-import { collection, doc, or, orderBy, query, where } from "firebase/firestore";
+import { collection, or, query, where } from "firebase/firestore";
 import { db } from "@/database/firebase";
 import useUserData from "@/hooks/useUserData";
 
 export default function Page() {
-    const { userDoc } = useUserData();
+    const [userDoc] = useUserData();
     const [chatrooms, loading] = useCollection(
         query(
             collection(db, "chats"),

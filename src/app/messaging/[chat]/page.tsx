@@ -13,22 +13,22 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ChatHeader from "@/components/chatHeader";
 import { createImageSource } from "@/lib/image";
-import ChatMessage from "@/components/message";
+import ChatMessage from "@/app/messaging/[chat]/message";
 import { Message, User } from "@/database/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useMessages } from "@/hooks/useMessages";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { useCollection, useCollectionData } from "react-firebase-hooks/firestore";
+import {
+    useCollection,
+    useCollectionData,
+} from "react-firebase-hooks/firestore";
 import useUserData from "@/hooks/useUserData";
 
-// Replace with actual chat room ID
-// and user ID
-
-const chatRoom = collection(db, "chats");
-
 export default function Chat({ params }: { params: { chat: string } }) {
-    const userId = useUserData().userDoc?.id;
+    // const currentL = useUserData().userDoc?.id;
+    const [currentUser] = useUserData();
+    // console.log(currentUser?.data)
     const user1 = {
         username: "Fiasco",
         isMyMessage: true,
@@ -46,8 +46,9 @@ export default function Chat({ params }: { params: { chat: string } }) {
 
     const [input, setInput] = useState("");
     const currentRoom = doc(collection(db, "chats"), params.chat);
-    // const messages = useMessages(currentRoom);
-    const [messages, loading, error] = useCollection(query(collection(currentRoom, "messages"), orderBy("timestamp")));
+    const [messages] = useCollection(
+        query(collection(currentRoom, "messages"), orderBy("timestamp"))
+    );
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value);
@@ -55,9 +56,10 @@ export default function Chat({ params }: { params: { chat: string } }) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (userId === undefined) return console.error("User not found");
+        if (currentUser?.id === undefined)
+            return console.error("User not found");
         const messageData: Omit<Message, "id"> = {
-            userId: userId,
+            userId: currentUser.id,
             body: input,
             timestamp: Date.now(),
             imageId: [],
@@ -74,7 +76,11 @@ export default function Chat({ params }: { params: { chat: string } }) {
             <ChatHeader username={user2.username} />
             <div className="p-5">
                 {messages?.docs.map((message) => (
-                    <ChatMessage user={user1} key={message.id}>
+                    <ChatMessage
+                        userId={message.data().userId}
+                        isSender={message.data().userId === currentUser?.id}
+                        key={message.id}
+                    >
                         {message.data().body}
                     </ChatMessage>
                 ))}
