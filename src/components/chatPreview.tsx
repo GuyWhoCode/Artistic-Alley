@@ -1,29 +1,28 @@
 "use client";
-import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useRouter } from "next/navigation";
 
 export default function ChatPreview({
     profilePicture,
     userName,
-    chatId,
     currentCommision,
 }: {
     profilePicture: string;
     userName: string;
-    chatId: string;
     currentCommision: string;
 }) {
     const router = useRouter();
-    const redirectToChat = (e : any, Title : string) => {
+    const redirectToChat = (e : any, userName : string) => {
         e.preventDefault()
-        router.push(`/messaging/${chatId}`);
+        router.push(`/messaging/${userName}`);
     };
     return (
         <div>
             <div
                 className="flex items-center gap-4 border-b p-4 hover:cursor-pointer hover:bg-muted"
                 onClick={(e) => {
-                    redirectToChat(e, chatId);
+                    redirectToChat(e, userName);
                 }}
             >
                 <Avatar className="h-[70px] w-[70px]">
