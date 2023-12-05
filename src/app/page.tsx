@@ -19,6 +19,9 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { Commission } from "@/database/types";
 import { createImageSource } from "@/lib/image";
 import ProfilePicture from "@/components/ProfilePicture";
+import { cache } from "react";
+
+export const revalidate = 0;
 
 const getUserData = async (userId: string) => {
     const userRef = collection(db, "users");
