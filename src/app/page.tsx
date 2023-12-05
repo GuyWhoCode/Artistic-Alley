@@ -6,30 +6,32 @@ import {
 } from "@/components/ui/navigation-menu";
 import NavItem from "@/components/ui/navItem";
 import {
-    Bookmark,
     Home,
     MessageCircle,
     PlusCircle,
+    UploadCloud,
     UserCircle2,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { db } from "@/database/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Commission } from "@/database/types";
 import { createImageSource } from "@/lib/image";
+import ProfilePicture from "@/components/ProfilePicture";
 import { cache } from "react";
 
 export const revalidate = 0;
 
-const getUserData = cache(async (userId: string) => {
+const getUserData = async (userId: string) => {
     const userRef = collection(db, "users");
     const q = query(userRef, where("id", "==", userId));
     const querySnapshot = await getDocs(q);
     const userData = querySnapshot.docs[0].data();
     return userData;
-});
+};
 
-const FetchCommissions = cache(async () => {
+const FetchCommissions = async () => {
     const allCommissions: Commission[] = [];
     const userPfps: string[] = [];
     const commRef = collection(db, "commissions");
@@ -68,7 +70,7 @@ const FetchCommissions = cache(async () => {
             })}
         </div>
     );
-});
+};
 
 const MobileNavbar = () => {
     return (
@@ -82,11 +84,11 @@ const MobileNavbar = () => {
                     Home
                 </Link>
                 <Link
-                    href="/"
+                    href="/cloudinary-setup"
                     className="flex flex-col items-center justify-center"
                 >
-                    <Bookmark size={48} />
-                    Saved
+                    <UploadCloud size={48} />
+                    Upload Image
                 </Link>
                 <Link
                     href="/new-commission"
@@ -102,7 +104,7 @@ const MobileNavbar = () => {
                     Messages
                 </Link>
                 <Link
-                    href="/profile"
+                    href="/login"
                     className="flex flex-col items-center justify-center"
                 >
                     <UserCircle2 size={48} />
@@ -115,14 +117,24 @@ const MobileNavbar = () => {
 const DesktopNavbar = () => {
     return (
         <NavigationMenu className="bg-[#F46767] p-2 mt-0 fixed max-w-none w-full z-10 top-0 justify-center md:flex hidden">
-            <NavigationMenuList>
-                <NavItem itemName="Profile" path="/profile" />
-                <NavItem itemName="Sign Up" path="/signup" />
-                <NavItem itemName="Login" path="/login" />
-                <NavItem itemName="Messaging" path="/messaging" />
-                <NavItem itemName="Chatting" path="/chatting" />
+            <NavigationMenuList className="flex gap-5">
+                <Link href="/" className="p-2">
+                    <Image
+                        src="/ArtisticAlleylogo.png"
+                        alt=""
+                        priority={true}
+                        width="50"
+                        height="50"
+                        style={{ width: "auto", height: "auto" }}
+                    />
+                </Link>
+                <NavItem itemName="Account" path="/login" />
+                <NavItem itemName="Messages" path="/messaging" />
                 <NavItem itemName="New Commission" path="/new-commission" />
-                <NavItem itemName="Cloudinary Setup" path="/cloudinary-setup" />
+                <NavItem
+                    itemName="Cloudinary Uploader"
+                    path="/cloudinary-setup"
+                />
             </NavigationMenuList>
         </NavigationMenu>
     );
@@ -135,6 +147,8 @@ export default function Page() {
             <DesktopNavbar />
             <MobileNavbar />
             <div className="flex flex-col items-center justify-center py-[60px] min-w-[320px]">
+                <br></br>
+                <br></br>
                 <h1 className="pb-4 text-5xl font-bold">Discovery page</h1>
                 <Input className=" max-w-[480px] mb-3 " placeholder="Search" />
                 <FetchCommissions />
