@@ -104,7 +104,7 @@ const MobileNavbar = () => {
                     Messages
                 </Link>
                 <Link
-                    href="/profile"
+                    href="/login"
                     className="flex flex-col items-center justify-center"
                 >
                     <UserCircle2 size={48} />
