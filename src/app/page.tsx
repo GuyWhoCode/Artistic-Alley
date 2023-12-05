@@ -17,16 +17,19 @@ import { db } from "@/database/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Commission } from "@/database/types";
 import { createImageSource } from "@/lib/image";
+import { cache } from "react";
 
-const getUserData = async (userId: string) => {
+export const revalidate = 0;
+
+const getUserData = cache(async (userId: string) => {
     const userRef = collection(db, "users");
     const q = query(userRef, where("id", "==", userId));
     const querySnapshot = await getDocs(q);
     const userData = querySnapshot.docs[0].data();
     return userData;
-};
+});
 
-const FetchCommissions = async () => {
+const FetchCommissions = cache(async () => {
     const allCommissions: Commission[] = [];
     const userPfps: string[] = [];
     const commRef = collection(db, "commissions");
@@ -65,7 +68,7 @@ const FetchCommissions = async () => {
             })}
         </div>
     );
-};
+});
 
 const MobileNavbar = () => {
     return (
