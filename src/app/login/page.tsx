@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import Login, { LoginFormData } from "@/components/login";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "@/database/firebase";
@@ -16,13 +17,26 @@ export default function Page() {
     const { signedIn, user }: CurrentUser = useCurrentUser();
     return (
         <main>
-            <h1>Sign In page!</h1>
             {signedIn ? (
-                <button onClick={signOutUser}>Sign Out</button>
+                <>
+                    <h1>Logged in Account Page</h1>
+                    <Link href="/profile">Go to your Profile Page.</Link>
+                    <br></br>
+                    <br></br>
+                    <button onClick={signOutUser}>Sign Out</button>
+                    <br></br>
+                </>
             ) : (
-                <Login submitForm={login} />
+                <>
+                    <h1>Sign In page!</h1>
+                    <br></br>
+                    <Login submitForm={login} />
+                </>
             )}
+
             <h1>{user?.email}</h1>
+            <br></br>
+            <Link href="/">Return Home</Link>
         </main>
     );
 }

@@ -2,6 +2,7 @@
 import { useState, FormEvent } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import ImageUploadPreview from "@/components/imageUploadPreview"; // to import the imageUploadPreview component
 
 export default function Page() {
@@ -38,42 +39,65 @@ export default function Page() {
     }
 
     return (
-        <div>
-            <Head>
-                <title>Cloudinary Image Uploader</title>
-                <meta
-                    name="description"
-                    content="This page is used to upload an image to Cloudinary."
-                />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
-            <main>
-                <h1>Cloudinary Image Uploader</h1>
-
-                <p>Upload your image online to Cloudinary!</p>
-                <form
-                    method="post"
-                    encType="multipart/form-data"
-                    onSubmit={handleOnSubmit}
-                >
-                    <ImageUploadPreview
-                        imageSrc={imageSrc}
-                        setImageSrc={setImageSrc}
+        <>
+            <div className="flex items-center justify-center h-screen ">
+                <Head>
+                    <title>Cloudinary Image Uploader</title>
+                    <meta
+                        name="description"
+                        content="This page is used to upload an image to Cloudinary."
                     />
+                    <link rel="icon" href="/favicon.ico" />
+                </Head>
 
-                    {/* Submit button */}
-                    {imageSrc && (
-                        <p>
-                            <button type="submit">Upload Files</button>
-                        </p>
-                    )}
-                </form>
-            </main>
-            <br></br>
+                <main>
+                    <div className="p-10 rounded-lg shadow-lg w-96">
+                        <h1 className="py-5 text-2xl font-bold text-center">
+                            Cloudinary Image Uploader
+                        </h1>
 
-            {/* Redirect back to home page */}
-            <Link href="/">Return Home</Link>
-        </div>
+                        <div className="p-5 text-center">
+                            <Image
+                                src="/cloudupload.png"
+                                alt=""
+                                priority={true}
+                                width="200"
+                                height="50"
+                                style={{ width: "auto", height: "auto" }}
+                            ></Image>
+                        </div>
+
+                        <p>Upload your image online to Cloudinary!</p>
+
+                        <form
+                            method="post"
+                            encType="multipart/form-data"
+                            onSubmit={handleOnSubmit}
+                        >
+                            <ImageUploadPreview
+                                imageSrc={imageSrc}
+                                setImageSrc={setImageSrc}
+                            />
+
+                            {/* Submit button */}
+                            {imageSrc && (
+                                <p>
+                                    <button type="submit">Upload Files</button>
+                                </p>
+                            )}
+                        </form>
+                    </div>
+                </main>
+                <br></br>
+            </div>
+
+            <div>
+                <br></br>
+                <br></br>
+                <br></br>
+                {/* Redirect back to home page */}
+                <Link href="/">Return Home</Link>
+            </div>
+        </>
     );
 }
