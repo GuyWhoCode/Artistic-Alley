@@ -131,7 +131,6 @@ const DesktopNavbar = () => {
                         style={{ width: "auto", height: "auto" }}
                     />
                 </Link>
-                <NavItem itemName="Home" path="/" />
                 <NavItem itemName="Account" path="/login" />
                 <NavItem itemName="Messages" path="/messaging" />
                 <NavItem itemName="New Commission" path="/new-commission" />
