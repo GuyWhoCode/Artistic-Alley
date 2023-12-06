@@ -22,7 +22,7 @@ import { cache } from "react";
 
 export const revalidate = 0;
 
-const getUserData = cache(async (userId: string) => {
+const getUserData = (async (userId: string) => {
     const userRef = collection(db, "users");
     const q = query(userRef, where("id", "==", userId));
     const querySnapshot = await getDocs(q);
@@ -30,7 +30,7 @@ const getUserData = cache(async (userId: string) => {
     return userData;
 });
 
-const FetchCommissions = cache(async () => {
+const FetchCommissions = (async () => {
     const allCommissions: Commission[] = [];
     const userPfps: string[] = [];
     const commRef = collection(db, "commissions");
