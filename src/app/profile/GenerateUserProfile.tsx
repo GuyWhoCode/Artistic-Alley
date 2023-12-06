@@ -6,7 +6,6 @@ import ProfileIntroduction from "@/components/ProfileIntroduction";
 import { db } from "@/database/firebase";
 import { Artist, Commission } from "@/database/types";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useUserData from "@/hooks/useUserData";
 import { query, collection, where, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
