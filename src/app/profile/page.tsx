@@ -27,28 +27,18 @@ const userData = {
 
 const ProfilePage = () => {
   return (
-    <main className="profilePage">
-      <ProfileBackground /> {/* Add the ProfileBackground component here */}
-      <div className="returnHome">
-        <Link href="/">
-        <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center cursor-pointer text-white text-2xl no-underline border-2 border-white">
-        <span>&#8592;</span>
-        </div>
-
-
-        </Link>
-      </div>
-
-      <ProfileHeader
-        username={userData.username}
-        profilePictureUrl={userData.profilePictureUrl}
-      />
-
-      <ProfileIntroduction bio={userData.bio} />
-
-      <Gallery images={userData.galleryImages} />
-
-    </main>
+      <main className="profilePage">
+          <ProfileBackground />{" "}
+          {/* Add the ProfileBackground component here */}
+          <br></br>
+          <ProfileHeader
+              username={userData.username}
+              profilePictureUrl={userData.profilePictureUrl}
+          />
+          <ProfileIntroduction bio={userData.bio} />
+          <Gallery images={userData.galleryImages} />
+          <Link href="/login">Return to Account</Link>
+      </main>
   );
 };
 
