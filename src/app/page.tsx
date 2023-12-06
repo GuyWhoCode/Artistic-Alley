@@ -53,7 +53,11 @@ const FetchCommissions = cache(async () => {
     }
 
     return (
-        <div className="grid grid-cols-2 gap-4 px-2">
+        // for responsiveness and to adjust to different screen sizes
+        // mobile screens shows 1 commission in each row by default.
+        // tablet (medium) screens shows 2 commissions in each row. 
+        // desktop (large) screens show 3 comissions in each row.
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-2">
             {allCommissions.map((commission, index) => {
                 return (
                     <HomepageCommission
