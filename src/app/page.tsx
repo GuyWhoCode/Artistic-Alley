@@ -18,20 +18,19 @@ import { db } from "@/database/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Commission } from "@/database/types";
 import { createImageSource } from "@/lib/image";
-import ProfilePicture from "@/components/ProfilePicture";
 import { cache } from "react";
 
 export const revalidate = 0;
 
-const getUserData = async (userId: string) => {
+const getUserData = cache(async (userId: string) => {
     const userRef = collection(db, "users");
     const q = query(userRef, where("id", "==", userId));
     const querySnapshot = await getDocs(q);
     const userData = querySnapshot.docs[0].data();
     return userData;
-};
+});
 
-const FetchCommissions = async () => {
+const FetchCommissions = cache(async () => {
     const allCommissions: Commission[] = [];
     const userPfps: string[] = [];
     const commRef = collection(db, "commissions");
@@ -70,7 +69,7 @@ const FetchCommissions = async () => {
             })}
         </div>
     );
-};
+});
 
 const MobileNavbar = () => {
     return (
@@ -139,6 +138,7 @@ const DesktopNavbar = () => {
         </NavigationMenu>
     );
 };
+
 export default function Page() {
     const pfpUrlPlaceholder =
         "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.6435-9/180978949_314228950059549_1005358403722529104_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=be3454&_nc_ohc=t-kEFO4r0oEAX8dCX0N&_nc_ht=scontent-sjc3-1.xx&oh=00_AfDDGu1dOSs-m8ToepSFqE3SCwGCN2ypyZgHjtUvibf2tQ&oe=6576618E";
