@@ -14,12 +14,7 @@ export default function useUserData(uid?: string) {
     const [value, loading] = useCollection(
         query(collection(db, "users"), where("id", "==", uid ?? ""))
     ); 
-    // let userDoc = undefined;
 
-    // if (value) {
-    //     userDoc = value.docs[0].data();
-    //     console.log(userDoc)
-    // }
     const userDoc = value?.docs[0];
 
     return {userDoc, loading};
