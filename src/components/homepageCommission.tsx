@@ -34,7 +34,10 @@ export default function HomepageCommission({
             <div className="pb-0">
                 <Avatar className=" absolute bottom-0 left-0 mb-14 w-[50px] h-[50px]">
                     <AvatarImage src={profilePicture} />
-                    <AvatarFallback>DN</AvatarFallback>
+                    {/* Default avatar pfp if a user does not have one. */}
+                    <AvatarFallback>
+                    <img src="https://res.cloudinary.com/datgtai6b/image/upload/v1701678406/artistic-alley-uploads/cilixlgm31bhlsk70ncy.jpg" alt="Fallback Avatar" />
+                    </AvatarFallback>
                 </Avatar>
                 <h2 className="pl-14">{userName}</h2>
                 <h1 className=" pl-14 text-base border-1 border-black pl-10 md:text-xl">
