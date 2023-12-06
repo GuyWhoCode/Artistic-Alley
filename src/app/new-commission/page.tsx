@@ -52,6 +52,7 @@ export default function Page() {
     return signedIn ? (
         <main>
             <NewCommissionForm submitForm={handleSubmission} />
+            <Link href="/">Return Home</Link>
         </main>
     ) : (
         <main>

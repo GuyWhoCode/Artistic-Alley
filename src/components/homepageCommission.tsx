@@ -40,7 +40,7 @@ export default function HomepageCommission({
                     </AvatarFallback>
                 </Avatar>
                 <h2 className="pl-14">{userName}</h2>
-                <h1 className=" pl-14 text-base border-1 border-black pl-10 md:text-xl">
+                <h1 className=" pl-14 text-base border-1 border-black md:text-xl">
                     {title}
                 </h1>
                 <div className="flow-root">

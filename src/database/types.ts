@@ -25,7 +25,6 @@ export type MessageImageBridge = {
 };
 
 export type Chat = {
-    id: string;
     userId: string;
     artistId: string;
     chatName: string;
