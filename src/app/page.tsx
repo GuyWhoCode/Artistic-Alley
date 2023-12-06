@@ -123,7 +123,7 @@ const DesktopNavbar = () => {
             <NavigationMenuList className="flex gap-5">
                 <Link href="/" className="p-2">
                     <Image
-                        src="/ArtisticAlleylogo.png"
+                        src="/ArtisticAlleyLogo.png"
                         alt=""
                         priority={true}
                         width="50"
