@@ -3,8 +3,6 @@ import { db } from "@/database/firebase";
 import { addDoc, collection, doc, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import { useState } from "react";
-import ChatHeader from "@/components/chatHeader";
-import { createImageSource } from "@/lib/image";
 import ChatMessage from "@/app/messaging/message";
 import { Message } from "@/database/types";
 import { Input } from "@/components/ui/input";
