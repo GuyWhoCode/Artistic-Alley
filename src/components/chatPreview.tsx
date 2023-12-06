@@ -27,7 +27,10 @@ export default function ChatPreview({
             >
                 <Avatar className="h-[70px] w-[70px]">
                     <AvatarImage src={profilePicture} />
-                    <AvatarFallback>CN</AvatarFallback>
+                   {/* Default avatar pfp if a user does not have one. */}
+                   <AvatarFallback>
+                    <img src="https://res.cloudinary.com/datgtai6b/image/upload/v1701678406/artistic-alley-uploads/cilixlgm31bhlsk70ncy.jpg" alt="Fallback Avatar" />
+                    </AvatarFallback>
                 </Avatar>
                 <div>
                     <h3 className="text-lg font-bold">{userName}</h3>
