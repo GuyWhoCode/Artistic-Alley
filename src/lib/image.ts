@@ -4,7 +4,7 @@ const IMAGE_HOST = "https://res.cloudinary.com/datgtai6b/image/upload";
  * @param image Full Image URL from Cloudinary
  * @returns Fragmented Image URL stored on Firebase
  */
-export const getImageSource = (image: string) => {
+export const getImageSource = (image: string): string => {
     return image.split(IMAGE_HOST)[1];
 };
 
@@ -13,6 +13,6 @@ export const getImageSource = (image: string) => {
  * @param imageURL Image URL Stored on Firebase
  * @returns Complete Image URL
  */
-export const createImageSource = (imageURL: string) => {
+export const createImageSource = (imageURL: string): string => {
     return IMAGE_HOST + imageURL;
 }

@@ -5,12 +5,11 @@ import styles from './Profile.module.css';
 
 interface ProfilePictureProps {
   imageUrl: string;
-  altText: string;
 }
 
-const ProfilePicture = ({ imageUrl, altText }: ProfilePictureProps) => (
+const ProfilePicture = ({ imageUrl }: ProfilePictureProps) => (
   <div className={styles.profilePicture}>
-    <img src={imageUrl} alt={altText} />
+    <img src={imageUrl} />
   </div>
 );
 

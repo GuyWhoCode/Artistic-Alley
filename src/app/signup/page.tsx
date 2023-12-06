@@ -60,7 +60,6 @@ export default function Page() {
 
     return (
         <main>
-            <h1>Sign Up page!</h1>
             <SignUp submitForm={submitForm} />
             <Link href="/">Return Home</Link>
         </main>
