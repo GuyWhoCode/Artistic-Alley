@@ -65,6 +65,7 @@ const ProfilePage = () => {
                 </Link>
             </div>
             <GenerateUserProfile />
+             <Link href="/login">Return to Account</Link>
         </main>
     );
 };
