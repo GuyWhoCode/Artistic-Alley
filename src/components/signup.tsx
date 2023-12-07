@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import Link from "next/link";
 
 export interface NewUserFormData {
     email: string,
@@ -134,6 +135,14 @@ export default function SignUp({ submitForm }: LoginProps) {
                             ) : null}
                         </div>
                         <Button type="submit">Sign Up</Button>
+                        <div className="flex justify-between items-baseline">
+                    <p className="text-sm text-muted-foreground font-medium leading-none">
+                        {"Already have an account?"}
+                    </p>
+                    <Button variant="link" className="font-semibold">
+                        <Link href="/login">Login</Link>
+                    </Button>
+                </div>
                     </div>
                 </form>
             </div>
