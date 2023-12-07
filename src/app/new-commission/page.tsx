@@ -39,6 +39,11 @@ export default function Page() {
             reviews: 0,
             price: parseInt(commissionData.price),
         };
+        if (updatedCommissionInfo.price < 0) {
+            alert("ERROR: Price cannot be negative");
+            return;
+        }
+
         const result = await createNewCommission(updatedCommissionInfo);
 
         if (result) {
@@ -52,6 +57,7 @@ export default function Page() {
     return signedIn ? (
         <main>
             <NewCommissionForm submitForm={handleSubmission} />
+            <Link href="/">Return Home</Link>
         </main>
     ) : (
         <main>

@@ -6,20 +6,22 @@ import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
 import SignUp, { NewUserFormData } from "@/components/signup";
 import { User, Artist } from "@/database/types";
 import { addDoc, collection } from "firebase/firestore";
+import { getImageSource } from "@/lib/image";
 
 const createNewUser = async ({
     email,
     password,
     artist,
     bio,
+    username
 }: NewUserFormData): Promise<boolean> => {
     try {
         const createdLoggedUser: UserCredential =
             await createUserWithEmailAndPassword(auth, email, password);
         let newUserInfo: User | Artist = {
             id: createdLoggedUser.user.uid,
-            username: "",
-            profilePicture: "",
+            username: username,
+            profilePicture: "https://res.cloudinary.com/datgtai6b/image/upload/v1701678406/artistic-alley-uploads/cilixlgm31bhlsk70ncy.jpg",
         };
         // Defaults new user info to regular user
 
@@ -60,7 +62,6 @@ export default function Page() {
 
     return (
         <main>
-            <h1>Sign Up page!</h1>
             <SignUp submitForm={submitForm} />
             <Link href="/">Return Home</Link>
         </main>

@@ -11,7 +11,7 @@ interface ProfileHeaderProps {
 
 const ProfileHeader = ({ username, profilePictureUrl }: ProfileHeaderProps) => (
   <div className={styles.profileHeader}>
-    <ProfilePicture imageUrl={profilePictureUrl} altText={`${username}'s profile`} />
+    <ProfilePicture imageUrl={profilePictureUrl} />
     <div className={styles.usernameContainer}>
       <h2>{username}</h2>
     </div>
