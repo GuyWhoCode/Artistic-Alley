@@ -5,30 +5,30 @@ import Image from "next/image";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { db } from "@/database/firebase";
 import { doc } from "firebase/firestore";
+import { User } from "@/database/types";
 
 // Replace with the actual user interface when implmentation
 interface MessageProps {
-    userId: string;
+    userData: User;
     isSender: boolean;
     images?: string[];
     children?: string;
 }
 
-const Message = ({ userId, images, isSender, children }: MessageProps) => {
-    const [user] = useDocumentData(doc(db, "users", userId));
+const Message = ({ userData, images, isSender, children }: MessageProps) => {
     return (
         <div
             className={`flex items-center 
             ${isSender ? "flex-row-reverse" : "flex-row"}`}
         >
-            {user && (
+            {userData && (
                 <>
                     <Avatar>
                         <AvatarImage
-                            src={user.profilePicture}
-                            alt={`User ${user.username}`}
+                            src={userData.profilePicture}
+                            alt={`User ${userData.username}`}
                         />
-                        <AvatarFallback>{user.username}</AvatarFallback>
+                        <AvatarFallback>{userData.username}</AvatarFallback>
                     </Avatar>
                     <div
                         className={`inline-block p-2 m-1 rounded-md

@@ -12,8 +12,7 @@ import { db } from "@/database/firebase";
 import useUserData from "@/hooks/useUserData";
 import useCurrentUser from "@/hooks/useCurrentUser";
 
-export default function Page() {
-    const currentUser = useCurrentUser();
+const ChatpageContent = () => {
     const [userDoc] = useUserData();
     const [chatrooms, loading] = useCollection(
         query(
@@ -24,32 +23,41 @@ export default function Page() {
             )
         )
     );
+
+    return (
+        <>
+            <CreateChatroomForm />
+            <ScrollArea className="h-[700px] w-[450px] rounded-md border p-4">
+                {loading && <p>Loading...</p>}
+                {chatrooms &&
+                    chatrooms.docs.map((chatroom) => {
+                        const data = chatroom.data();
+                        return (
+                            <ChatPreview
+                                key={chatroom.id}
+                                chatId={chatroom.id}
+                                profilePicture={
+                                    "https://res.cloudinary.com/datgtai6b/image/upload/v1701678406/artistic-alley-uploads/cilixlgm31bhlsk70ncy.jpg"
+                                }
+                                userName={data.chatName}
+                                currentCommision={"test"}
+                            />
+                        );
+                    })}
+            </ScrollArea>
+        </>
+    );
+};
+
+export default function Page() {
+    const { signedIn } = useCurrentUser();
+
     return (
         <main>
             <div className="flex flex-col items-center h-full justify-center pt-[60px] max-h-screen">
                 <h1 className="text-3xl font-bold mb-2">Messaging</h1>
-                {currentUser ? (
-                    <>
-                        <CreateChatroomForm />
-                        <ScrollArea className="h-[700px] w-[450px] rounded-md border p-4">
-                            {loading && <p>Loading...</p>}
-                            {chatrooms &&
-                                chatrooms.docs.map((chatroom) => {
-                                    const data = chatroom.data();
-                                    return (
-                                        <ChatPreview
-                                            key={chatroom.id}
-                                            chatId={chatroom.id}
-                                            profilePicture={
-                                                "https://res.cloudinary.com/datgtai6b/image/upload/v1701678406/artistic-alley-uploads/cilixlgm31bhlsk70ncy.jpg"
-                                            }
-                                            userName={data.chatName}
-                                            currentCommision={"test"}
-                                        />
-                                    );
-                                })}
-                        </ScrollArea>
-                    </>
+                {signedIn ? (
+                    <ChatpageContent />
                 ) : (
                     <p>Please log in to view this page.</p>
                 )}
