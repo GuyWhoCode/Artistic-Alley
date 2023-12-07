@@ -4,19 +4,38 @@ import { addDoc, collection, doc, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import { useState } from "react";
 import ChatMessage from "@/app/messaging/message";
-import { Message } from "@/database/types";
+import { Chat, Chat as ChatType, Message, User } from "@/database/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useCollection } from "react-firebase-hooks/firestore";
+import {
+    useCollection,
+    useDocument,
+    useDocumentData,
+} from "react-firebase-hooks/firestore";
 import useUserData from "@/hooks/useUserData";
 import { UploadCloud } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
-export default function Chat({ params }: { params: { chat: string } }) {
-    const [currentUser] = useUserData();
+export default function Page({ params }: { params: { chat: string } }) {
+    const { signedIn } = useCurrentUser();
+    if (!signedIn) return <p>Please log in to view this page.</p>;
+    return <ChatContent chatId={params.chat} />;
+}
+
+
+const ChatContent = ({ chatId }: { chatId: string }) => {
+    const [currentUser, currentUserLoading] = useUserData();
+
     const [imageForm, setImageForm] = useState<FormData>();
     const [input, setInput] = useState("");
-    const currentRoom = doc(collection(db, "chats"), params.chat);
+
+    const currentRoom = doc(collection(db, "chats"), chatId);
+    const [currentRoomData] = useDocumentData(currentRoom);
+    const [targetUser, targetUserLoading] = useDocument(
+        doc(db, "users", currentRoomData?.artistId || "uXkOjOjBO3DbcB5Tqgg0")
+    );
+
     const [messages, loading] = useCollection(
         query(collection(currentRoom, "messages"), orderBy("timestamp"))
     );
@@ -33,27 +52,79 @@ export default function Chat({ params }: { params: { chat: string } }) {
 
         setInput("");
         setSubmittingMessage(true);
-        fetch("https://api.cloudinary.com/v1_1/datgtai6b/image/upload", {
-            method: "POST",
-            body: imageForm,
-        })
-            .then((r) => r.json())
-            .then((data) => {
-                const messageData: Omit<Message, "id"> = {
-                    userId: currentUser.id,
-                    body: input,
-                    timestamp: Date.now(),
-                    imageId: [data.secure_url],
-                };
+        if (imageForm === undefined) {
+            const messageData: Omit<Message, "id"> = {
+                userId: currentUser.id,
+                body: input,
+                timestamp: Date.now(),
+                imageId: [],
+            };
 
-                addDoc(collection(currentRoom, "messages"), messageData).catch(
-                    (err) => {
-                        console.log(err);
+            addDoc(collection(currentRoom, "messages"), messageData).catch(
+                (err) => {
+                    console.log(err);
+                }
+            );
+            setSubmittingMessage(false);
+        } else {
+            fetch("https://api.cloudinary.com/v1_1/datgtai6b/image/upload", {
+                method: "POST",
+                body: imageForm,
+            })
+                .then((r) => r.json())
+                .then((data) => {
+                    e.preventDefault();
+                    if (currentUser?.id === undefined)
+                        return console.error("User not found");
+                    if (input === "" || submittingMessage) return;
+
+                    setSubmittingMessage(true);
+                    if (imageForm === undefined) {
+                        const messageData: Omit<Message, "id"> = {
+                            userId: currentUser.id,
+                            body: input,
+                            timestamp: Date.now(),
+                            imageId: [],
+                        };
+
+                        addDoc(
+                            collection(currentRoom, "messages"),
+                            messageData
+                        ).catch((err) => {
+                            console.log(err);
+                        });
+                        setSubmittingMessage(false);
+                    } else {
+                        fetch(
+                            "https://api.cloudinary.com/v1_1/datgtai6b/image/upload",
+                            {
+                                method: "POST",
+                                body: imageForm,
+                            }
+                        )
+                            .then((r) => r.json())
+                            .then((data) => {
+                                const messageData: Omit<Message, "id"> = {
+                                    userId: currentUser.id,
+                                    body: input,
+                                    timestamp: Date.now(),
+                                    imageId: [data.secure_url],
+                                };
+
+                                addDoc(
+                                    collection(currentRoom, "messages"),
+                                    messageData
+                                ).catch((err) => {
+                                    console.log(err);
+                                });
+                                setSubmittingMessage(false);
+                                setImageForm(undefined);
+                            });
                     }
-                );
-                setSubmittingMessage(false)
-                setImageForm(undefined)
-            });
+                    setInput("");
+                    setImageForm(undefined);
+                });
+        }
     };
     const handleImageChange = async (
         e: React.ChangeEvent<HTMLInputElement>
@@ -64,16 +135,23 @@ export default function Chat({ params }: { params: { chat: string } }) {
         setImageForm(formData);
     };
 
+    if (currentUserLoading || targetUserLoading || loading) return <p>Loading...</p>;
+
     return (
         <>
             <div className="p-5">
-                {loading && <p>Loading...</p>}
                 {messages &&
                     messages.docs.map((message) => {
-                        const data = message.data();
+                       const data = message.data() as Message;
+
+                        const userData =
+                            data.userId === targetUser!.data()?.id
+                                ? (targetUser!.data() as User)
+                                : (currentUser!.data() as User);
+
                         return (
                             <ChatMessage
-                                userId={data.userId}
+                                userData={userData}
                                 isSender={data.userId === currentUser?.id}
                                 images={data.imageId}
                                 key={message.id}
@@ -85,7 +163,11 @@ export default function Chat({ params }: { params: { chat: string } }) {
                 <form onSubmit={handleSubmit} className="flex space-x-2">
                     <Input
                         type="text"
-                        placeholder={submittingMessage ? "Sending..." : "Enter your message" }
+                        placeholder={
+                            submittingMessage
+                                ? "Sending..."
+                                : "Enter your message"
+                        }
                         onChange={handleChange}
                         value={input}
                         disabled={submittingMessage}
@@ -109,4 +191,4 @@ export default function Chat({ params }: { params: { chat: string } }) {
             </div>
         </>
     );
-}
+};

@@ -11,7 +11,6 @@ export type Commission = {
 };
 
 export type Message = {
-    id: string;
     userId: string;
     body: string;
     timestamp: number;

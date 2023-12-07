@@ -109,7 +109,6 @@ export default function SignUp({ submitForm }: LoginProps) {
                                         <RadioGroupItem
                                             value="default"
                                             id="user-check"
-                                            checked
                                         />
                                         <Label
                                             htmlFor="user-check"
